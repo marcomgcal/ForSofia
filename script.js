@@ -545,3 +545,239 @@ showCelebration();
 }
 
 });
+
+/* =====================================================
+PREMIUM EFFECTS
+===================================================== */
+
+/* ---------- Floating Hearts ---------- */
+
+const heartContainer=document.getElementById("heartContainer");
+
+function createHeart(){
+
+if(!heartContainer)return;
+
+const heart=document.createElement("div");
+
+heart.className="floatingHeart";
+
+heart.innerHTML="❤";
+
+heart.style.left=Math.random()*100+"vw";
+
+heart.style.fontSize=(18+Math.random()*20)+"px";
+
+heart.style.animationDuration=(5+Math.random()*4)+"s";
+
+heartContainer.appendChild(heart);
+
+setTimeout(()=>{
+
+heart.remove();
+
+},9000);
+
+}
+
+setInterval(()=>{
+
+if(currentScreen===6){
+
+createHeart();
+
+}
+
+},800);
+
+/* ---------- Shooting Stars ---------- */
+
+const shootingStars=document.getElementById("shootingStars");
+
+function createMeteor(){
+
+if(!shootingStars)return;
+
+const meteor=document.createElement("div");
+
+meteor.className="meteor";
+
+meteor.style.top=Math.random()*40+"vh";
+
+shootingStars.appendChild(meteor);
+
+setTimeout(()=>{
+
+meteor.remove();
+
+},2200);
+
+}
+
+setInterval(createMeteor,9000);
+
+/* ---------- Sparkles ---------- */
+
+const sparkleContainer=document.getElementById("sparkleContainer");
+
+function sparkle(){
+
+if(!sparkleContainer)return;
+
+const star=document.createElement("span");
+
+star.className="sparkle";
+
+star.style.left=Math.random()*100+"vw";
+
+star.style.top=Math.random()*100+"vh";
+
+sparkleContainer.appendChild(star);
+
+setTimeout(()=>{
+
+star.remove();
+
+},3000);
+
+}
+
+setInterval(()=>{
+
+if(currentScreen===6){
+
+sparkle();
+
+}
+
+},350);
+
+/* =====================================================
+SWIPE GALLERY
+===================================================== */
+
+let touchStartX=0;
+
+const gallery=document.getElementById("gallery");
+
+if(gallery){
+
+gallery.addEventListener("touchstart",(e)=>{
+
+touchStartX=e.touches[0].clientX;
+
+});
+
+gallery.addEventListener("touchend",(e)=>{
+
+const end=e.changedTouches[0].clientX;
+
+if(end<touchStartX-60){
+
+nextPhoto();
+
+}
+
+});
+
+}
+
+function nextPhoto(){
+
+if(memories.length===0)return;
+
+memories[currentMemory].classList.remove("visible");
+
+currentMemory++;
+
+if(currentMemory>=memories.length){
+
+currentMemory=0;
+
+}
+
+memories[currentMemory].classList.add("visible");
+
+}
+
+/* =====================================================
+INSTALL PROMPT
+===================================================== */
+
+let deferredPrompt;
+
+window.addEventListener(
+
+"beforeinstallprompt",
+
+(event)=>{
+
+event.preventDefault();
+
+deferredPrompt=event;
+
+const card=document.getElementById("installCard");
+
+if(card){
+
+card.classList.remove("installHidden");
+
+}
+
+}
+
+);
+
+const installButton=document.getElementById("installButton");
+
+if(installButton){
+
+installButton.addEventListener("click",async()=>{
+
+if(!deferredPrompt)return;
+
+deferredPrompt.prompt();
+
+await deferredPrompt.userChoice;
+
+deferredPrompt=null;
+
+});
+
+}
+
+const laterButton=document.getElementById("laterButton");
+
+if(laterButton){
+
+laterButton.addEventListener("click",()=>{
+
+document.getElementById("installCard").classList.add("installHidden");
+
+});
+
+}
+
+/* =====================================================
+WINDOW RESIZE
+===================================================== */
+
+window.addEventListener("resize",()=>{
+
+canvas.width=window.innerWidth;
+
+canvas.height=window.innerHeight;
+
+});
+
+/* =====================================================
+END
+===================================================== */
+
+console.log(
+
+"%cFor Sofia ❤️",
+
+"font-size:22px;color:white;font-family:serif;"
+
+);
