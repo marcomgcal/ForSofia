@@ -1,0 +1,58 @@
+/* =====================================
+   FOR SOFIA
+   Created with ❤️ by Marco
+===================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+
+    width:100%;
+    height:100%;
+
+    background:#000;
+
+    color:#fff;
+
+    font-family:Inter,sans-serif;
+
+    overflow:hidden;
+
+}
+
+body{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+#app{
+
+    width:100%;
+    height:100%;
+
+}
+
+.screen{
+
+    display:none;
+
+    width:100%;
+    height:100%;
+
+}
+
+.screen.active{
+
+    display:flex;
+
+}
