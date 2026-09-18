@@ -581,3 +581,173 @@ is my favourite one.
 </div>
 
 </section>
+
+<!-- ===================================================== -->
+<!-- FINAL SCENE -->
+<!-- ===================================================== -->
+
+<section
+id="finalScene"
+class="screen">
+
+<div class="finalContent">
+
+<h1>
+
+Forever
+Starts Here
+
+</h1>
+
+<p>
+
+Thank you
+for saying yes.
+
+</p>
+
+<p class="signature">
+
+Marco ❤️ Sofia
+
+</p>
+
+</div>
+
+</section>
+
+</main>
+
+<!-- ===================================================== -->
+<!-- EFFECTS -->
+<!-- ===================================================== -->
+
+<div id="starsLayer"></div>
+
+<div id="shootingStars"></div>
+
+<div id="heartContainer"></div>
+
+<div id="sparkleContainer"></div>
+
+<!-- ===================================================== -->
+<!-- INSTALL CARD -->
+<!-- ===================================================== -->
+
+<div
+id="installCard"
+class="installHidden">
+
+<div class="installBox">
+
+<h2>
+
+Install
+For Sofia
+
+</h2>
+
+<p>
+
+Add this experience
+to your Home Screen
+and keep it forever.
+
+</p>
+
+<div class="installButtons">
+
+<button
+id="installButton">
+
+Install
+
+</button>
+
+<button
+id="laterButton">
+
+Later
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ===================================================== -->
+<!-- AUDIO -->
+<!-- ===================================================== -->
+
+<audio
+id="backgroundMusic"
+preload="none">
+
+<!--
+audio/music.mp3
+-->
+
+</audio>
+
+<!-- ===================================================== -->
+<!-- PRELOAD IMAGES -->
+<!-- ===================================================== -->
+
+<link
+rel="preload"
+href="images/photo1.jpg"
+as="image">
+
+<link
+rel="preload"
+href="images/photo2.jpg"
+as="image">
+
+<link
+rel="preload"
+href="images/photo3.jpg"
+as="image">
+
+<link
+rel="preload"
+href="images/photo4.jpg"
+as="image">
+
+<!-- ===================================================== -->
+<!-- JAVASCRIPT -->
+<!-- ===================================================== -->
+
+<script
+src="script.js">
+
+</script>
+
+<script>
+
+if("serviceWorker" in navigator){
+
+window.addEventListener(
+
+"load",
+
+()=>{
+
+navigator.serviceWorker.register(
+
+"sw.js"
+
+);
+
+}
+
+);
+
+}
+
+</script>
+
+</body>
+
+</html>
