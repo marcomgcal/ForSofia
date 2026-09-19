@@ -6,10 +6,10 @@ let counterInterval = null;
 let galleryInterval = null;
 let activeGalleryIndex = 0;
 
-// FECHA Y HORA EXACTA DE INICIO EN EL MUNDO REAL
-// (19 de Septiembre de 2026, 16:07:00 UTC)
-// Este número es universal y NUNCA cambia al recargar la página.
-const ABSOLUTE_START_TIME = 1789834020000;
+// FECHA Y HORA EXACTA E INMUTABLE DE INICIO
+// Formato: new Date(AÑO, MES_INDEX, DÍA, HORA, MINUTO, SEGUNDO)
+// NOTA: En JavaScript los meses van de 0 a 11 (0 = Enero, 8 = Septiembre)
+const START_DATE = new Date(2026, 8, 19, 16, 0, 0); 
 
 // English Letter Content
 const letterText = `From the very first day, I knew you were someone truly special.\nThank you for all the amazing moments we've shared, and for loving me even when I start acting weird!\n\nThis little application is a special place kept just for the two of us.`;
@@ -142,25 +142,20 @@ function showCelebration() {
 }
 
 function startCounter() {
-    // Renderizado inmediato al abrir la pantalla
     updateCounter();
 
     if (counterInterval) {
         clearInterval(counterInterval);
     }
 
-    // El contador se actualiza cada segundo avanzando con el reloj del teléfono
     counterInterval = setInterval(() => {
         updateCounter();
     }, 1000);
 }
 
 function updateCounter() {
-    // Hora actual del dispositivo en milisegundos
-    const now = Date.now();
-
-    // Restamos la hora actual menos el momento exacto en que empezó
-    const diff = Math.max(0, Math.floor((now - ABSOLUTE_START_TIME) / 1000));
+    const now = new Date();
+    const diff = Math.max(0, Math.floor((now.getTime() - START_DATE.getTime()) / 1000));
 
     const years = Math.floor(diff / 31536000);
     const months = Math.floor((diff % 31536000) / 2592000);
