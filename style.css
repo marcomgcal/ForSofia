@@ -1,676 +1,518 @@
-/* =======================================================
-   FOR SOFIA
-   CINEMATIC EXPERIENCE (FIXED & RESPONSIVE - WITHOUT METEORS)
-======================================================= */
-
-:root{
-    --bg:#000000;
-    --text:#ffffff;
-    --soft:#d9d9d9;
-    --accent:#ffffff;
-
-    --font-title:"Cormorant Garamond",serif;
-    --font-body:"Inter",sans-serif;
-
-    --radius:24px;
-    --transition:.6s cubic-bezier(.22,.61,.36,1);
-}
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
-
-html{
-    width:100%;
-    height:100%;
-    background:#000;
-    scroll-behavior:smooth;
-}
-
-body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:var(--bg);
-    color:var(--text);
-    font-family:var(--font-body);
-}
-
-/* =======================================================
-CENTER
-======================================================= */
+/* =====================================================
+   1. RESET, LAYOUT & PANTALLAS
+===================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+}
+
+#app {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+}
+
+/* =====================================================
+   2. LOADER INICIAL & BARRAS DE CARGA (ROSA FLUORESCENTE)
+===================================================== */
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 1s ease;
+}
+
+#loader h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin-bottom: 8px;
+}
+
+#loader p {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-bottom: 25px;
+}
+
+/* Pista de la barra de carga */
+.loaderBar, .savingBar {
+    width: 220px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 0, 127, 0.3);
+}
+
+/* Relleno con efecto Rosa Fluorescente / Neón */
+.loaderProgress, #savingProgress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff1493, #ff007f, #ff66cc);
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f;
+    transition: width 0.3s ease;
+}
 
-.center{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    width:100%;
-    height:100%;
-    padding:20px;
+.loaderProgress {
+    animation: loadAnim 2.4s ease-in-out forwards;
 }
 
-button{
-    border:none;
-    outline:none;
-    cursor:pointer;
-    font-family:inherit;
+@keyframes loadAnim {
+    0% { width: 0%; }
+    50% { width: 65%; }
+    100% { width: 100%; }
 }
 
-img{
-    display:block;
-    width:100%;
-    height:100%;
-    object-fit:cover;
+/* =====================================================
+   3. SECCIONES (WELCOME, INTRO, LETTER, PROPOSAL)
+===================================================== */
+.center {
+    text-align: center;
+    max-width: 400px;
 }
 
-#app{
-    width:100vw;
-    height:100vh;
-    height:100dvh; /* Soporte para navegadores móviles modernos */
-    position:relative;
-    overflow:hidden;
+.eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 12px;
 }
 
-/* ==========================================
-SCREENS
-========================================== */
-
-.screen{
-    position:absolute;
-    inset:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    opacity:0;
-    visibility:hidden;
-    transition: opacity .9s ease, visibility .9s ease;
-    background:#000;
-    padding:20px;
-    overflow-y:auto; /* Permite scroll interno si el contenido supera la pantalla */
-}
-
-.screen.active{
-    opacity:1;
-    visibility:visible;
-}
-
-/* ==========================================
-WELCOME
-========================================== */
-
-#welcome{
-    text-align:center;
-    padding:20px;
-}
-
-.eyebrow{
-    font-size:14px;
-    color:#9b9b9b;
-    letter-spacing:3px;
-    text-transform:uppercase;
-    margin-bottom:20px;
-}
-
-#welcome h1{
-    font-family:var(--font-title);
-    font-size:clamp(36px, 8vw, 64px);
-    font-weight:600;
-    margin-bottom:20px;
-}
-
-.subtitle{
-    max-width:700px;
-    line-height:1.8;
-    color:#dddddd;
-    font-size:clamp(16px, 4vw, 20px);
-    margin-bottom:40px;
-}
-
-#beginBtn{
-    background:white;
-    color:black;
-    padding:16px 38px;
-    border-radius:999px;
-    font-size:18px;
-    transition:.35s;
-}
-
-#beginBtn:active{
-    transform:scale(.95);
-}
-
-/* ==========================================
-INTRO
-========================================== */
-
-.cinematic{
-    text-align:center;
-    padding:20px;
-}
-
-.line{
-    font-family:var(--font-title);
-    font-size:clamp(28px, 6vw, 54px);
-    margin:20px 0;
-    opacity:0;
-}
-
-/* ==========================================
-GALLERY
-========================================== */
-
-#gallery{
-    overflow:hidden;
-    padding:0;
-}
-
-.memory{
-    position:absolute;
-    inset:0;
-    opacity:0;
-    transition:1.2s;
-    pointer-events:none;
-}
-
-.memory.visible{
-    opacity:1;
-    pointer-events:auto;
-}
-
-.memory img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    animation:kenburns 18s ease-in-out infinite alternate;
-}
-
-.overlay{
-    position:absolute;
-    inset:0;
-    background: linear-gradient(rgba(0,0,0,.15), rgba(0,0,0,.75));
-}
-
-.memoryText{
-    position:absolute;
-    bottom:90px;
-    left:24px;
-    right:24px;
-    text-align:center;
-}
-
-.memoryText h2{
-    font-family:var(--font-title);
-    font-size:clamp(32px, 6vw, 54px);
-    margin-bottom:12px;
-}
-
-.memoryText p{
-    max-width:420px;
-    margin:0 auto;
-    line-height:1.6;
-    color:#ececec;
-    font-size:clamp(14px, 3.5vw, 16px);
-}
-
-.primaryButton{
-    position:absolute;
-    bottom:24px;
-    left:50%;
-    transform:translateX(-50%);
-    background:white;
-    color:black;
-    padding:14px 32px;
-    border-radius:999px;
-    white-space:nowrap;
-    font-size:16px;
-}
-
-@keyframes kenburns{
-    0%{ transform:scale(1); }
-    100%{ transform:scale(1.12); }
-}
-
-/* =======================================================
-LETTER
-======================================================= */
-
-#letter{
-    padding:20px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
-.letterCard{
-    width:min(100%, 700px);
-    max-height:85vh;
-    max-height:85dvh;
-    background:rgba(255,255,255,.05);
-    backdrop-filter:blur(25px);
-    -webkit-backdrop-filter:blur(25px);
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:28px;
-    padding:clamp(24px, 5vw, 50px);
-    box-shadow:0 20px 80px rgba(0,0,0,.45);
-    display:flex;
-    flex-direction:column;
-    overflow-y:auto; /* Evita que la carta se desborde fuera de la pantalla */
-}
-
-.letterCard h2{
-    font-family:var(--font-title);
-    font-size:clamp(32px, 5vw, 46px);
-    margin-bottom:20px;
-    flex-shrink:0;
-}
-
-#typedLetter{
-    min-height:180px;
-    font-size:clamp(15px, 3.8vw, 18px);
-    line-height:1.8;
-    color:#efefef;
-    white-space:pre-line;
-    word-break:break-word;
-}
-
-#continueLetter{
-    margin-top:24px;
-    padding:14px 36px;
-    border-radius:999px;
-    background:white;
-    color:black;
-    font-size:16px;
-    align-self:center;
-    flex-shrink:0;
-}
-
-/* =======================================================
-PROPOSAL
-======================================================= */
-
-#proposal{
-    padding:20px;
-}
-
-.proposalCard{
-    width:min(100%, 720px);
-    max-height:90vh;
-    overflow-y:auto;
-    text-align:center;
-    background:rgba(255,255,255,.04);
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
-    border-radius:30px;
-    padding:clamp(30px, 6vw, 60px) clamp(20px, 5vw, 45px);
-    border:1px solid rgba(255,255,255,.1);
-}
-
-.small{
-    letter-spacing:3px;
-    text-transform:uppercase;
-    font-size:12px;
-    opacity:.7;
-    margin-bottom:16px;
-}
-
-.proposalCard h1{
-    font-family:var(--font-title);
-    font-size:clamp(34px, 7vw, 56px);
-    font-weight:600;
-    margin-bottom:14px;
+h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 7vw, 3.2rem);
+    font-weight: 500;
+    line-height: 1.1;
+    margin-bottom: 15px;
 }
 
-.proposalCard h2{
-    font-size:clamp(20px, 4vw, 30px);
-    font-weight:400;
-    margin-bottom:24px;
+.subtitle {
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.8;
+    margin-bottom: 30px;
 }
 
-.proposalCard p{
-    font-size:clamp(15px, 3.5vw, 18px);
-    line-height:1.7;
-    color:#ddd;
-    margin-bottom:32px;
+/* Botones principales */
+button, .primaryButton {
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
 }
 
-.buttons{
-    display:flex;
-    justify-content:center;
-    gap:16px;
-    flex-wrap:wrap;
+button:active, .primaryButton:active {
+    transform: scale(0.96);
 }
 
-#yesBtn, #noBtn{
-    padding:16px 36px;
-    border-radius:999px;
-    font-size:16px;
-    transition:.35s;
+/* Intro Cinematográfica */
+.cinematic .line {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    opacity: 0.9;
+    margin: 10px 0;
 }
 
-#yesBtn{
-    background:white;
-    color:black;
+/* Tarjeta de Carta */
+.letterCard {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 30px 25px;
+    max-width: 380px;
+    width: 100%;
+    text-align: left;
 }
 
-#yesBtn:active{
-    transform:scale(.95);
+.letterCard h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
 }
 
-#noBtn{
-    background:transparent;
-    border:1px solid rgba(255,255,255,.3);
-    color:white;
+#typedLetter {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    opacity: 0.9;
+    white-space: pre-line;
+    min-height: 160px;
 }
 
-/* =======================================================
-SAVING
-======================================================= */
-
-#saving h2{
-    font-family:var(--font-title);
-    font-size:clamp(36px, 7vw, 56px);
-    text-align:center;
-    margin-bottom:16px;
-}
-
-#saving p{
-    color:#d8d8d8;
-    margin-bottom:32px;
-    font-size:clamp(15px, 3.5vw, 18px);
-}
-
-.savingBar{
-    width:min(90%, 500px);
-    height:8px;
-    background:#1d1d1d;
-    border-radius:999px;
-    overflow:hidden;
-}
-
-#savingProgress{
-    width:0%;
-    height:100%;
-    background:white;
-    transition:.3s;
-}
-
-/* =======================================================
-COUNTER
-======================================================= */
-
-#celebration{
-    padding:20px;
-    text-align:center;
-}
-
-.celebrationContent h1{
-    font-family:var(--font-title);
-    font-size:clamp(40px, 8vw, 70px);
-    margin-bottom:16px;
-}
-
-#counter{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(100px, 1fr));
-    gap:14px;
-    margin:30px auto;
-    width:100%;
-    max-width:700px;
-}
-
-.timeBox{
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:18px;
-    padding:16px 10px;
-}
-
-.timeBox span{
-    display:block;
-    font-size:clamp(24px, 5vw, 40px);
-    font-weight:700;
-    margin-bottom:6px;
-}
-
-.timeBox label{
-    font-size:12px;
-    opacity:.7;
-    letter-spacing:1px;
-    text-transform:uppercase;
-}
-
-/* =======================================================
-FINAL
-======================================================= */
-
-#finalScene{
-    text-align:center;
-    padding:20px;
-}
-
-.finalContent h1{
-    font-family:var(--font-title);
-    font-size:clamp(42px, 8vw, 72px);
-    margin-bottom:20px;
-}
-
-.signature{
-    margin-top:28px;
-    font-size:clamp(18px, 4vw, 24px);
-    letter-spacing:2px;
-}
-
-/* =======================================================
-LOADER
-======================================================= */
-
-#loader{
-    position:fixed;
-    inset:0;
-    background:#000;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    z-index:99999;
-    transition:opacity 1s ease;
-    padding:20px;
-}
-
-#loader h1{
-    font-family:var(--font-title);
-    font-size:clamp(36px, 7vw, 54px);
-    margin-bottom:16px;
-}
-
-#loader p{
-    color:#aaa;
-    margin-bottom:28px;
-}
-
-.loaderBar{
-    width:min(80%, 260px);
-    height:6px;
-    background:#202020;
-    border-radius:999px;
-    overflow:hidden;
-}
-
-.loaderProgress{
-    height:100%;
-    width:0%;
-    background:#fff;
-    animation:loading 2.4s forwards;
-}
-
-@keyframes loading{
-    0%{width:0%;}
-    100%{width:100%;}
-}
-
-/* =======================================================
-BACKGROUND EFFECTS
-======================================================= */
-
-#starsLayer{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:1;
-    background-image:
-        radial-gradient(circle,#ffffff 1px,transparent 1px),
-        radial-gradient(circle,#ffffff 1px,transparent 1px),
-        radial-gradient(circle,#ffffff 1px,transparent 1px);
-    background-size: 180px 180px, 260px 260px, 340px 340px;
-    opacity:.35;
-    animation:starsMove 120s linear infinite;
-}
-
-@keyframes starsMove{
-    from{transform:translateY(0);}
-    to{transform:translateY(-300px);}
-}
-
-#heartContainer{
-    position:fixed;
-    inset:0;
-    overflow:hidden;
-    pointer-events:none;
-    z-index:3;
-}
-
-.floatingHeart{
-    position:absolute;
-    bottom:-60px;
-    color:white;
-    opacity:.9;
-    animation:heartFloat linear forwards;
-}
-
-@keyframes heartFloat{
-    0%{ transform:translateY(0) scale(.7); opacity:0; }
-    20%{ opacity:1; }
-    100%{ transform:translateY(-120vh) scale(1.5); opacity:0; }
-}
-
-#sparkleContainer{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    overflow:hidden;
-    z-index:4;
-}
-
-.sparkle{
-    position:absolute;
-    width:6px;
-    height:6px;
-    border-radius:50%;
-    background:white;
-    animation:sparkle 3s ease forwards;
+#continueLetter {
+    margin-top: 20px;
+    display: none;
 }
 
-@keyframes sparkle{
-    0%{opacity:0;transform:scale(.2);}
-    40%{opacity:1;}
-    100%{opacity:0;transform:scale(2);}
+/* Propuesta */
+.proposalCard {
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 35px 25px;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
 }
 
-#confetti{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:20;
+.proposalCard .small {
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 15px;
 }
-
-/* =======================================================
-INSTALL CARD
-======================================================= */
 
-#installCard{
-    position:fixed;
-    left:20px;
-    right:20px;
-    bottom:20px;
-    max-width:500px;
-    margin:0 auto;
-    background:rgba(20,20,20,.96);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:24px;
-    padding:20px;
-    backdrop-filter:blur(30px);
-    -webkit-backdrop-filter:blur(30px);
-    z-index:1000;
-    transition:.5s;
+.proposalCard h2 {
+    font-family: 'Cormorant Garamond', serif;
+    color: #ff007f;
+    font-size: 2rem;
+    margin-bottom: 15px;
 }
 
-.installHidden{
-    opacity:0;
-    visibility:hidden;
-    transform:translateY(40px);
+.proposalCard p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    opacity: 0.8;
+    margin-bottom: 25px;
 }
 
-.installBox h2{
-    font-family:var(--font-title);
-    font-size:clamp(24px, 5vw, 34px);
-    margin-bottom:8px;
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    position: relative;
+    min-height: 50px;
 }
 
-.installBox p{
-    line-height:1.6;
-    color:#ddd;
-    margin-bottom:20px;
-    font-size:14px;
+#yesBtn {
+    background: #ff007f;
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
 }
 
-.installButtons{
-    display:flex;
-    gap:12px;
+#noBtn {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
 }
 
-.installButtons button{
-    flex:1;
-    padding:14px;
-    border-radius:999px;
-    font-size:14px;
+/* =====================================================
+   4. GALERÍA DE MEMORIAS
+===================================================== */
+#gallery {
+    position: relative;
+    padding: 0;
 }
-
-#installButton{ background:white; color:black; }
-#laterButton{ background:#1d1d1d; color:white; }
-
-/* =======================================================
-UTILITY & ANIMATIONS
-======================================================= */
 
-.hidden{ display:none!important; }
-
-.noSelect{
-    -webkit-user-select:none;
-    user-select:none;
+.memory {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 40px 25px 100px 25px;
+}
+
+.memory.visible {
+    opacity: 1;
 }
 
-.fadeIn{ animation:fadeIn 1.2s forwards; }
+.memory img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.85) 100%);
+    z-index: 2;
+}
+
+.memoryText {
+    position: relative;
+    z-index: 3;
+    max-width: 350px;
+}
+
+.memoryText h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+}
+
+.memoryText p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    opacity: 0.85;
+}
+
+#continueGallery {
+    position: absolute;
+    bottom: 30px;
+    z-index: 10;
+}
+
+/* =====================================================
+   5. PANTALLA DE CELEBRACIÓN Y CONTADOR (RESPONSIVE)
+===================================================== */
+.celebrationContent {
+    width: 100%;
+    max-width: 100vw;
+    padding: 15px 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 5;
+}
+
+.celebrationContent h1 {
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    margin-bottom: 8px;
+}
+
+.celebrationContent p {
+    font-size: clamp(0.85rem, 3.5vw, 1rem);
+    opacity: 0.85;
+}
+
+/* Grid del Contador: 3 columnas simétricas para móvil */
+#counter {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    width: 100%;
+    max-width: 330px; /* Ancho seguro que evita scroll horizontal */
+    margin: 20px auto;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.timeBox {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 0, 127, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 12px;
+    padding: 10px 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.timeBox span {
+    font-size: clamp(1.1rem, 4.2vw, 1.4rem);
+    font-weight: 700;
+    line-height: 1;
+    color: #ffffff;
+}
 
-@keyframes fadeIn{
-    from{ opacity:0; transform:translateY(20px); }
-    to{ opacity:1; transform:translateY(0); }
+.timeBox label {
+    font-size: 0.65rem;
+    opacity: 0.8;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #ffb3da;
 }
-
-.fadeOut{ animation:fadeOut .8s forwards; }
-
-@keyframes fadeOut{
-    to{ opacity:0; }
+
+#confetti {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
 }
-
-.scaleIn{ animation:scaleIn .8s ease; }
 
-@keyframes scaleIn{
-    from{ transform:scale(.9); opacity:0; }
-    to{ transform:scale(1); opacity:1; }
+/* =====================================================
+   6. EFECTOS VISUALES & PROMPT DE INSTALACIÓN
+===================================================== */
+#heartContainer, #sparkleContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.floatingHeart {
+    position: absolute;
+    bottom: -20px;
+    color: #ff007f;
+    opacity: 0.7;
+    animation: floatUp 8s linear forwards;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(0.8); opacity: 0.7; }
+    100% { transform: translateY(-105vh) scale(1.2); opacity: 0; }
+}
+
+.sparkle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 6px #ffffff;
+    animation: blink 2.5s infinite alternate;
+}
+
+@keyframes blink {
+    0% { opacity: 0.2; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1.4); }
+}
+
+/* Tarjeta PWA Install */
+#installCard {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 360px;
+    background: rgba(20, 20, 20, 0.95);
+    border: 1px solid rgba(255, 0, 127, 0.4);
+    backdrop-filter: blur(15px);
+    border-radius: 16px;
+    padding: 20px;
+    z-index: 10000;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+#installCard.installHidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 30px);
+}
+
+.installBox h2 {
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+}
+
+.installBox p {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    margin-bottom: 15px;
+}
+
+.installButtons {
+    display: flex;
+    gap: 10px;
+}
+
+.installButtons button {
+    flex: 1;
+    padding: 10px;
+    font-size: 0.85rem;
+}
+
+#installButton {
+    background: #ff007f;
+    color: #ffffff;
+}
+
+#laterButton {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+/* =====================================================
+   7. MEDIA QUERIES PARA MÓVILES PEQUEÑOS (iPhone SE)
+===================================================== */
+@media (max-width: 360px) {
+    #counter {
+        max-width: 280px;
+        gap: 6px;
+    }
+    .timeBox {
+        padding: 8px 2px;
+    }
+    .timeBox span {
+        font-size: 1rem;
+    }
+    .timeBox label {
+        font-size: 0.6rem;
+    }
 }
