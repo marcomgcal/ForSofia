@@ -37,10 +37,13 @@ body, html {
     justify-content: center;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
-    padding: 20px;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+    padding: clamp(15px, 5vw, 30px);
     box-sizing: border-box;
     z-index: 1;
+    /* Respeta áreas seguras de pantallas con notch */
+    padding-top: calc(clamp(15px, 5vw, 30px) + env(safe-area-inset-top));
+    padding-bottom: calc(clamp(15px, 5vw, 30px) + env(safe-area-inset-bottom));
 }
 
 .screen.active {
@@ -64,12 +67,13 @@ body, html {
     align-items: center;
     justify-content: center;
     z-index: 9999;
-    transition: opacity 1s ease;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    padding: 20px;
 }
 
 #loader h1 {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 2.8rem;
+    font-size: clamp(2rem, 7vw, 2.8rem);
     font-weight: 800;
     letter-spacing: -1px;
     margin-bottom: 8px;
@@ -79,13 +83,14 @@ body, html {
 }
 
 #loader p {
-    font-size: 0.95rem;
+    font-size: clamp(0.85rem, 3vw, 0.95rem);
     opacity: 0.7;
     margin-bottom: 25px;
 }
 
 .loaderBar, .savingBar {
-    width: 220px;
+    width: 100%;
+    max-width: 240px;
     height: 6px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
@@ -117,11 +122,13 @@ body, html {
 ===================================================== */
 .center {
     text-align: center;
+    width: 100%;
     max-width: 400px;
+    margin: 0 auto;
 }
 
 .eyebrow {
-    font-size: 0.75rem;
+    font-size: clamp(0.65rem, 2.5vw, 0.75rem);
     font-weight: 600;
     letter-spacing: 2.5px;
     text-transform: uppercase;
@@ -131,9 +138,9 @@ body, html {
 
 h1 {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(2.3rem, 8vw, 3.4rem);
+    font-size: clamp(2rem, 7.5vw, 3.2rem);
     font-weight: 800;
-    line-height: 1.1;
+    line-height: 1.15;
     letter-spacing: -1px;
     margin-bottom: 15px;
 }
@@ -144,25 +151,32 @@ h2 {
 }
 
 .subtitle {
-    font-size: 1.05rem;
+    font-size: clamp(0.9rem, 3.5vw, 1.05rem);
     line-height: 1.6;
     opacity: 0.8;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
-/* Botones Modernos con Estilo Borde Sutil */
+/* Botones Modernos Ajustados */
 button, .primaryButton {
     background: #ffffff;
     color: #000000;
     border: none;
-    padding: 16px 36px;
+    padding: clamp(12px, 3.5vw, 16px) clamp(24px, 6vw, 36px);
     border-radius: 30px;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 0.95rem;
+    font-size: clamp(0.85rem, 3vw, 0.95rem);
     font-weight: 700;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    touch-action: manipulation;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease, background-color 0.2s ease;
     box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+    display: inline-block;
+}
+
+button:hover, .primaryButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(255, 255, 255, 0.3);
 }
 
 button:active, .primaryButton:active {
@@ -172,41 +186,45 @@ button:active, .primaryButton:active {
 /* Intro Cinematográfica */
 .cinematic .line {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.6rem;
+    font-size: clamp(1.2rem, 4.5vw, 1.6rem);
     font-weight: 600;
     opacity: 0.9;
     margin: 12px 0;
 }
 
-/* Tarjeta de Carta */
+/* Tarjeta de Carta con Scroll Interno Preventivo */
 .letterCard {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-radius: 24px;
-    padding: 30px 25px;
+    padding: clamp(20px, 5vw, 30px) clamp(18px, 4vw, 25px);
     max-width: 380px;
     width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
     text-align: left;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .letterCard h2 {
-    font-size: 1.9rem;
-    margin-bottom: 15px;
+    font-size: clamp(1.5rem, 5vw, 1.9rem);
+    margin-bottom: 12px;
 }
 
 #typedLetter {
-    font-size: 1rem;
-    line-height: 1.7;
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    line-height: 1.6;
     opacity: 0.9;
     white-space: pre-line;
-    min-height: 160px;
+    min-height: 120px;
 }
 
 #continueLetter {
     margin-top: 20px;
     display: none;
+    width: 100%;
 }
 
 /* Propuesta */
@@ -217,10 +235,11 @@ button:active, .primaryButton:active {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-radius: 24px;
-    padding: 35px 25px;
+    padding: clamp(25px, 6vw, 35px) clamp(18px, 4vw, 25px);
     max-width: 380px;
     width: 100%;
     text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .proposalCard .small {
@@ -229,17 +248,17 @@ button:active, .primaryButton:active {
     letter-spacing: 2px;
     text-transform: uppercase;
     color: #ff66cc;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .proposalCard h2 {
     color: #ff007f;
-    font-size: 2.2rem;
-    margin-bottom: 15px;
+    font-size: clamp(1.7rem, 6vw, 2.2rem);
+    margin-bottom: 12px;
 }
 
 .proposalCard p {
-    font-size: 0.95rem;
+    font-size: clamp(0.85rem, 3vw, 0.95rem);
     line-height: 1.5;
     opacity: 0.8;
     margin-bottom: 25px;
@@ -248,9 +267,11 @@ button:active, .primaryButton:active {
 .buttons {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    align-items: center;
+    gap: 12px;
     position: relative;
     min-height: 50px;
+    flex-wrap: wrap;
 }
 
 #yesBtn {
@@ -259,9 +280,15 @@ button:active, .primaryButton:active {
     box-shadow: 0 0 20px rgba(255, 0, 127, 0.5);
 }
 
+#yesBtn:hover {
+    background: #ff1493;
+    box-shadow: 0 0 25px rgba(255, 0, 127, 0.8);
+}
+
 #noBtn {
     background: rgba(255, 255, 255, 0.12);
     color: #ffffff;
+    backdrop-filter: blur(8px);
 }
 
 /* =====================================================
@@ -282,7 +309,7 @@ button:active, .primaryButton:active {
     transition: opacity 1.2s ease;
     display: flex;
     align-items: flex-end;
-    padding: 40px 25px 100px 25px;
+    padding: 40px 25px calc(80px + env(safe-area-inset-bottom)) 25px;
 }
 
 .memory.visible {
@@ -305,7 +332,7 @@ button:active, .primaryButton:active {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.85) 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.85) 100%);
     z-index: 2;
 }
 
@@ -316,24 +343,24 @@ button:active, .primaryButton:active {
 }
 
 .memoryText h2 {
-    font-size: 2.2rem;
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
     margin-bottom: 8px;
 }
 
 .memoryText p {
-    font-size: 1rem;
+    font-size: clamp(0.85rem, 3vw, 1rem);
     line-height: 1.5;
     opacity: 0.85;
 }
 
 #continueGallery {
     position: absolute;
-    bottom: 30px;
+    bottom: calc(20px + env(safe-area-inset-bottom));
     z-index: 10;
 }
 
 /* =====================================================
-   5. PANTALLA SAVING / LOADER FINAL (CENTRADO PERFECTO)
+   5. PANTALLA SAVING / LOADER FINAL
 ===================================================== */
 #saving {
     display: flex;
@@ -363,8 +390,8 @@ button:active, .primaryButton:active {
 ===================================================== */
 .celebrationContent {
     width: 100%;
-    max-width: 100vw;
-    padding: 15px 10px;
+    max-width: 420px;
+    padding: 10px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -375,12 +402,12 @@ button:active, .primaryButton:active {
 }
 
 .celebrationContent h1 {
-    font-size: clamp(1.9rem, 6.5vw, 2.6rem);
+    font-size: clamp(1.7rem, 6vw, 2.6rem);
     margin-bottom: 8px;
 }
 
 .celebrationContent p {
-    font-size: clamp(0.9rem, 3.8vw, 1.05rem);
+    font-size: clamp(0.85rem, 3.5vw, 1.05rem);
     opacity: 0.85;
 }
 
@@ -412,14 +439,14 @@ button:active, .primaryButton:active {
 
 .timeBox span {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(1.2rem, 4.5vw, 1.5rem);
+    font-size: clamp(1.1rem, 4vw, 1.5rem);
     font-weight: 800;
     line-height: 1;
     color: #ffffff;
 }
 
 .timeBox label {
-    font-size: 0.65rem;
+    font-size: clamp(0.55rem, 2vw, 0.65rem);
     font-weight: 600;
     opacity: 0.8;
     margin-top: 5px;
@@ -457,6 +484,7 @@ button:active, .primaryButton:active {
     color: #ff007f;
     opacity: 0.7;
     animation: floatUp 8s linear forwards;
+    will-change: transform, opacity;
 }
 
 @keyframes floatUp {
@@ -465,20 +493,30 @@ button:active, .primaryButton:active {
 }
 
 /* =====================================================
-   8. MEDIA QUERIES MÓVILES PEQUEÑOS
+   8. MEDIA QUERIES PARA PANTALLAS CON ALTURA O ANCHO PEQUEÑO
 ===================================================== */
+@media (max-height: 600px) {
+    .screen {
+        padding: 10px;
+    }
+    .letterCard, .proposalCard {
+        max-height: 85vh;
+        padding: 15px;
+    }
+    .subtitle {
+        margin-bottom: 15px;
+    }
+}
+
 @media (max-width: 360px) {
     #counter {
         max-width: 280px;
         gap: 6px;
     }
     .timeBox {
-        padding: 9px 2px;
+        padding: 8px 2px;
     }
-    .timeBox span {
-        font-size: 1.1rem;
-    }
-    .timeBox label {
-        font-size: 0.6rem;
+    .buttons {
+        gap: 8px;
     }
 }
