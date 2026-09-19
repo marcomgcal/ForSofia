@@ -324,7 +324,33 @@ button:active, .primaryButton:active {
 }
 
 /* =====================================================
-   5. PANTALLA DE CELEBRACIÓN Y CONTADOR (RESPONSIVE)
+   5. PANTALLA SAVING / LOADER FINAL (FIX CENTRADO)
+===================================================== */
+#saving {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+#saving .center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#saving .savingBar {
+    margin: 20px auto 0 auto;
+}
+
+/* =====================================================
+   6. PANTALLA DE CELEBRACIÓN Y CONTADOR (RESPONSIVE)
 ===================================================== */
 .celebrationContent {
     width: 100%;
@@ -355,7 +381,7 @@ button:active, .primaryButton:active {
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     width: 100%;
-    max-width: 330px; /* Ancho seguro que evita scroll horizontal */
+    max-width: 330px;
     margin: 20px auto;
     padding: 0;
     box-sizing: border-box;
@@ -403,7 +429,7 @@ button:active, .primaryButton:active {
 }
 
 /* =====================================================
-   6. EFECTOS VISUALES & PROMPT DE INSTALACIÓN
+   7. EFECTOS VISUALES & PROMPT DE INSTALACIÓN
 ===================================================== */
 #heartContainer, #sparkleContainer {
     position: fixed;
@@ -499,7 +525,7 @@ button:active, .primaryButton:active {
 }
 
 /* =====================================================
-   7. MEDIA QUERIES PARA MÓVILES PEQUEÑOS (iPhone SE)
+   8. MEDIA QUERIES PARA MÓVILES PEQUEÑOS (iPhone SE)
 ===================================================== */
 @media (max-width: 360px) {
     #counter {
