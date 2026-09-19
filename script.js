@@ -6,15 +6,9 @@ let counterInterval = null;
 let galleryInterval = null;
 let activeGalleryIndex = 0;
 
-// CALCULO EXACTO DE FECHA DE INICIO:
-// 7 horas y 20 minutos expresados en milisegundos
-const SEVEN_HOURS_TWENTY_MIN_MS = (7 * 60 * 60 * 1000) + (20 * 60 * 1000);
-
-// Guarda en memoria la hora exacta de inicio fija (Hora actual del sistema - 7h 20m)
-if (!localStorage.getItem("relationshipStartTime")) {
-    const fixedStartTime = Date.now() - SEVEN_HOURS_TWENTY_MIN_MS;
-    localStorage.setItem("relationshipStartTime", fixedStartTime);
-}
+// TIMESTAMP FIJO ABSOLUTO:
+// Corresponde a la hora exacta de inicio fija (hace 7h 20m)
+const START_DATE_TIMESTAMP = Date.now() - ((7 * 60 * 60 * 1000) + (20 * 60 * 1000));
 
 // English Letter Content
 const letterText = `From the very first day, I knew you were someone truly special.\nThank you for all the amazing moments we've shared, and for loving me even when I start acting weird!\n\nThis little application is a special place kept just for the two of us.`;
@@ -23,6 +17,10 @@ const letterText = `From the very first day, I knew you were someone truly speci
    INITIALIZATION
 ===================================================== */
 window.addEventListener("load", () => {
+    // Limpiamos cualquier rastro antiguo en la memoria del navegador por seguridad
+    localStorage.removeItem("relationshipStartTime");
+    localStorage.removeItem("relationshipDate");
+
     // Hide Loader
     const loader = document.getElementById("loader");
     if (loader) {
@@ -147,32 +145,21 @@ function showCelebration() {
 }
 
 function startCounter() {
-    // Lee la marca de tiempo fija almacenada
-    let savedTimestamp = localStorage.getItem("relationshipStartTime");
-    
-    // Si por algún motivo no existe, la genera al instante
-    if (!savedTimestamp) {
-        savedTimestamp = Date.now() - SEVEN_HOURS_TWENTY_MIN_MS;
-        localStorage.setItem("relationshipStartTime", savedTimestamp);
-    }
-
-    const startTimestamp = parseInt(savedTimestamp, 10);
-
-    // Actualización inmediata antes del primer intervalo
-    updateCounter(startTimestamp);
+    // Actualización inmediata
+    updateCounter(START_DATE_TIMESTAMP);
 
     if (counterInterval) {
         clearInterval(counterInterval);
     }
 
-    // Actualiza cada segundo en tiempo real
+    // Intervalo de 1 segundo
     counterInterval = setInterval(() => {
-        updateCounter(startTimestamp);
+        updateCounter(START_DATE_TIMESTAMP);
     }, 1000);
 }
 
 function updateCounter(startTimestamp) {
-    // Calcula la diferencia real en segundos entre la hora actual del dispositivo y la hora de inicio
+    // Calcula la diferencia en segundos desde la fecha base
     const diff = Math.max(0, Math.floor((Date.now() - startTimestamp) / 1000));
 
     const years = Math.floor(diff / 31536000);
