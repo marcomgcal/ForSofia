@@ -1,16 +1,17 @@
 /* =====================================================
-   ESTADO GLOBAL Y VARIABLES
+   GLOBAL STATE & VARIABLES
 ===================================================== */
 let currentScreen = 'welcome';
 let counterInterval = null;
 
-const letterText = `Querida Sofía,\n\nDesde el primer día supe que eras alguien muy especial.\nGracias por cada risa, cada abrazo y cada momento compartido.\n\nEsta pequeña aplicación es un rinconcito guardado solo para los dos.`;
+// English Letter Content
+const letterText = `Dearest Sofia,\n\nFrom the very first day, I knew you were someone truly special.\nThank you for every laugh, every hug, and every moment we've shared.\n\nThis little application is a special place kept just for the two of us.`;
 
 /* =====================================================
-   INICIALIZACIÓN Y RESTAURACIÓN DE SESIÓN (PWA FIX)
+   INITIALIZATION & SESSION RESTORATION (PWA FIX)
 ===================================================== */
 window.addEventListener("load", () => {
-    // Esconder Loader
+    // Hide Loader
     const loader = document.getElementById("loader");
     if (loader) {
         setTimeout(() => {
@@ -21,7 +22,7 @@ window.addEventListener("load", () => {
         }, 2400);
     }
 
-    // Comprobar si ya existe una fecha guardada
+    // Check if relationship date is already saved
     const savedDate = localStorage.getItem("relationshipDate");
     if (savedDate) {
         showCelebration();
@@ -31,7 +32,7 @@ window.addEventListener("load", () => {
 });
 
 /* =====================================================
-   NAVEGACIÓN ENTRE PANTALLAS
+   SCREEN NAVIGATION
 ===================================================== */
 function showScreenById(screenId) {
     const screens = document.querySelectorAll('.screen');
@@ -53,7 +54,7 @@ function nextScreen(screenId) {
 }
 
 /* =====================================================
-   EFECTO ESCRIBIR CARTA
+   LETTER TYPEWRITER EFFECT
 ===================================================== */
 let typed = false;
 function typeWriter() {
@@ -63,6 +64,9 @@ function typeWriter() {
     const el = document.getElementById("typedLetter");
     const btn = document.getElementById("continueLetter");
     let i = 0;
+
+    // Reset element content before typing
+    if (el) el.textContent = "";
 
     function type() {
         if (i < letterText.length) {
@@ -77,10 +81,10 @@ function typeWriter() {
 }
 
 /* =====================================================
-   GUARDAR FECHA Y ANIMACIÓN SAVING
+   SAVE DATE & SAVING ANIMATION
 ===================================================== */
 function saveRelationship() {
-    // Guardar fecha ISO compatible con iOS
+    // Save ISO date string for iOS compatibility
     const nowIso = new Date().toISOString();
     localStorage.setItem("relationshipDate", nowIso);
 
@@ -106,7 +110,7 @@ function startSaving() {
 }
 
 /* =====================================================
-   CELEBRACIÓN & CONTADOR
+   CELEBRATION & COUNTER
 ===================================================== */
 function showCelebration() {
     showScreenById("celebration");
@@ -160,7 +164,7 @@ function updateCounter(startTimestamp) {
 }
 
 /* =====================================================
-   EFECTOS EXTRA
+   EXTRA EFFECTS
 ===================================================== */
 function triggerConfetti() {
     if (typeof confetti === 'function') {
