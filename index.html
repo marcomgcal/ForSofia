@@ -1,666 +1,518 @@
-<!DOCTYPE html>
-<html lang="en">
+/* =====================================
+   FOR SOFIA
+   Created with ❤️ by Marco
+===================================== */
 
-<head>
+console.log("For Sofia loaded ❤️");
 
-<meta charset="UTF-8">
+/* =====================================================
+APP STATE & NAVIGATION
+===================================================== */
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+const screens = document.querySelectorAll(".screen");
 
-<title>For Sofia ❤️</title>
+let currentScreen = 0;
+let galleryInterval = null;
+let counterInterval = null;
+let confettiAnimationId = null;
 
-<meta name="theme-color" content="#000000">
+function showScreen(index) {
+    if (index < 0 || index >= screens.length) return;
 
-<meta name="apple-mobile-web-app-capable" content="yes">
+    screens.forEach(screen => {
+        screen.classList.remove("active");
+    });
 
-<meta name="apple-mobile-web-app-status-bar-style"
-content="black-translucent">
-
-<meta name="apple-mobile-web-app-title"
-content="For Sofia">
-
-<link rel="manifest"
-href="manifest.json">
-
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
-
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
-rel="stylesheet">
-
-<link rel="stylesheet"
-href="style.css">
-
-</head>
-
-<body>
-
-<div id="loader">
-
-<h1>For Sofia</h1>
-
-<p>
-
-Preparing something special...
-
-</p>
-
-<div class="loaderBar">
-
-<div class="loaderProgress"></div>
-
-</div>
-
-</div>
-
-<main id="app">
-
-<section
-id="welcome"
-class="screen active">
-
-<div class="center">
-
-<p class="eyebrow">
-
-Made with love by Marco
-
-</p>
-
-<h1>
-
-For Sofia
-
-</h1>
-
-<p class="subtitle">
-
-Some stories
-
-are worth remembering.
-
-<br><br>
-
-Ours
-
-is worth living.
-
-</p>
-
-<button id="beginBtn">
-
-Begin ❤️
-
-</button>
-
-</div>
-
-</section>
-
-<section
-id="intro"
-class="screen">
-
-<div class="center cinematic">
-
-<p class="line">
-
-Sometimes...
-
-</p>
-
-<p class="line">
-
-Life changes
-
-</p>
-
-<p class="line">
-
-without making
-
-any noise.
-
-</p>
-
-</div>
-
-</section>
-
-<section
-id="gallery"
-class="screen">
-
-<article class="memory visible">
-
-<img
-src="3E532DB9-1744-4FA3-B695-7530707F9E5F.jpeg"
-alt="Photo 1">
-
-<div class="overlay"></div>
-
-<div class="memoryText">
-
-<h2>
-
-Sometimes...
-
-</h2>
-
-<p>
-
-The best things
-
-happen when
-
-you least expect them.
-
-</p>
-
-</div>
-
-</article>
-
-<article class="memory">
-
-<img
-src="645BDD27-2ACF-427F-8FB8-E530815554EF.jpeg"
-alt="Photo 2">
-
-<div class="overlay"></div>
-
-<div class="memoryText">
-
-<h2>
-
-Then...
-
-</h2>
-
-<p>
-
-There were
-
-conversations,
-
-laughs,
-
-and moments
-
-I never wanted
-
-to end.
-
-</p>
-
-</div>
-
-</article>
-
-<article class="memory">
-
-<img
-src="D96AAB3F-820E-4A5B-94A3-75F0CD6899A4.jpeg"
-alt="Photo 3">
-
-<div class="overlay"></div>
-
-<div class="memoryText">
-
-<h2>
-
-Little by little...
-
-</h2>
-
-<p>
-
-You became
-
-my favourite place.
-
-</p>
-
-</div>
-
-</article>
-
-<article class="memory">
-
-<img
-src="041569D8-1E29-4ADB-8D2C-907D2EEA402F.png"
-alt="Photo 4">
-
-<div class="overlay"></div>
-
-<div class="memoryText">
-
-<h2>
-
-And then...
-
-</h2>
-
-<p>
-
-I realised
-
-I wanted
-
-many more memories
-
-with you.
-
-</p>
-
-</div>
-
-</article>
-
-<button
-id="continueGallery"
-class="primaryButton">
-
-Continue ❤️
-
-</button>
-
-</section>
-
-<section
-id="letter"
-class="screen">
-
-<div class="letterCard">
-
-<h2>
-
-Dear Sofia,
-
-</h2>
-
-<div id="typedLetter"></div>
-
-<button
-id="continueLetter">
-
-Continue
-
-</button>
-
-</div>
-
-</section>
-
-<section
-id="transition"
-class="screen">
-
-<div class="center">
-
-<p>
-
-There is
-
-only one thing
-
-left to ask...
-
-</p>
-
-</div>
-
-</section>
-
-<section
-id="proposal"
-class="screen">
-
-<div class="proposalCard">
-
-<p class="small">
-
-Marco ❤️ Sofia
-
-</p>
-
-<h1>
-
-Will you officially
-
-be by my side...
-
-</h1>
-
-<h2>
-
-from today on?
-
-</h2>
-
-<p>
-
-I don't promise
-
-a perfect life.
-
-But I promise
-
-that every day
-
-I'll choose you.
-
-</p>
-
-<div class="buttons">
-
-<button
-id="yesBtn">
-
-Yes ❤️
-
-</button>
-
-<button
-id="noBtn">
-
-No 🤍
-
-</button>
-
-</div>
-
-</div>
-
-</section>
-<!-- ===================================================== -->
-<!-- SAVING -->
-<!-- ===================================================== -->
-
-<section
-id="saving"
-class="screen">
-
-<div class="center">
-
-<h2>
-
-Some moments
-
-deserve to
-
-last forever.
-
-</h2>
-
-<p>
-
-Let's save ours...
-
-</p>
-
-<div class="savingBar">
-
-<div id="savingProgress">
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ===================================================== -->
-<!-- CELEBRATION -->
-<!-- ===================================================== -->
-
-<section
-id="celebration"
-class="screen">
-
-<canvas
-id="confetti">
-
-</canvas>
-
-<div class="celebrationContent">
-
-<h1>
-
-Marco ❤️ Sofia
-
-</h1>
-
-<p>
-
-Together for
-
-</p>
-
-<div id="counter">
-
-<div class="timeBox">
-
-<span id="years">0</span>
-
-<label>Years</label>
-
-</div>
-
-<div class="timeBox">
-
-<span id="months">0</span>
-
-<label>Months</label>
-
-</div>
-
-<div class="timeBox">
-
-<span id="days">0</span>
-
-<label>Days</label>
-
-</div>
-
-<div class="timeBox">
-
-<span id="hours">00</span>
-
-<label>Hours</label>
-
-</div>
-
-<div class="timeBox">
-
-<span id="minutes">00</span>
-
-<label>Minutes</label>
-
-</div>
-
-<div class="timeBox">
-
-<span id="seconds">00</span>
-
-<label>Seconds</label>
-
-</div>
-
-</div>
-
-<p>
-
-Every second
-with you
-is my favourite one.
-
-</p>
-
-</div>
-
-</section>
-
-<!-- ===================================================== -->
-<!-- FINAL SCENE -->
-<!-- ===================================================== -->
-
-<section
-id="finalScene"
-class="screen">
-
-<div class="finalContent">
-
-<h1>
-
-Forever
-Starts Here
-
-</h1>
-
-<p>
-
-Thank you
-for saying yes.
-
-</p>
-
-<p class="signature">
-
-Marco ❤️ Sofia
-
-</p>
-
-</div>
-
-</section>
-
-</main>
-
-<!-- ===================================================== -->
-<!-- EFFECTS -->
-<!-- ===================================================== -->
-
-<div id="starsLayer"></div>
-
-<div id="shootingStars"></div>
-
-<div id="heartContainer"></div>
-
-<div id="sparkleContainer"></div>
-
-<!-- ===================================================== -->
-<!-- INSTALL CARD -->
-<!-- ===================================================== -->
-
-<div
-id="installCard"
-class="installHidden">
-
-<div class="installBox">
-
-<h2>
-
-Install
-For Sofia
-
-</h2>
-
-<p>
-
-Add this experience
-to your Home Screen
-and keep it forever.
-
-</p>
-
-<div class="installButtons">
-
-<button
-id="installButton">
-
-Install
-
-</button>
-
-<button
-id="laterButton">
-
-Later
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- ===================================================== -->
-<!-- AUDIO -->
-<!-- ===================================================== -->
-
-<audio
-id="backgroundMusic"
-preload="none">
-
-<!--
-audio/music.mp3
--->
-
-</audio>
-
-<!-- ===================================================== -->
-<!-- PRELOAD IMAGES -->
-<!-- ===================================================== -->
-
-<link
-rel="preload"
-href="3E532DB9-1744-4FA3-B695-7530707F9E5F.jpeg"
-as="image">
-
-<link
-rel="preload"
-href="645BDD27-2ACF-427F-8FB8-E530815554EF.jpeg"
-as="image">
-
-<link
-rel="preload"
-href="D96AAB3F-820E-4A5B-94A3-75F0CD6899A4.jpeg"
-as="image">
-
-<link
-rel="preload"
-href="041569D8-1E29-4ADB-8D2C-907D2EEA402F.png"
-as="image">
-
-<!-- ===================================================== -->
-<!-- JAVASCRIPT -->
-<!-- ===================================================== -->
-
-<script
-src="script.js"></script>
-
-<script>
-
-if("serviceWorker" in navigator){
-
-window.addEventListener("load",()=>{
-
-navigator.serviceWorker.register("sw.js");
-
-});
-
+    screens[index].classList.add("active");
+    currentScreen = index;
 }
 
-</script>
+/* =====================================================
+INITIALIZATION & RESTORE SESSION
+===================================================== */
 
-</body>
+window.addEventListener("load", () => {
+    // Esconder Loader
+    const loader = document.getElementById("loader");
+    if (loader) {
+        setTimeout(() => {
+            loader.style.opacity = "0";
+            setTimeout(() => {
+                loader.style.display = "none";
+            }, 1000);
+        }, 2400);
+    }
 
-</html>
+    // Verificar si ya había una fecha guardada
+    const saved = localStorage.getItem("relationshipDate");
+    if (saved) {
+        showCelebration();
+    }
+});
+
+/* =====================================================
+BEGIN
+===================================================== */
+
+const beginBtn = document.getElementById("beginBtn");
+
+if (beginBtn) {
+    beginBtn.addEventListener("click", () => {
+        showScreen(1); // Muestra intro
+
+        setTimeout(() => {
+            showScreen(2); // Muestra galería
+            startGallery();
+        }, 3200);
+    });
+}
+
+/* =====================================================
+GALLERY
+===================================================== */
+
+const memories = document.querySelectorAll(".memory");
+let currentMemory = 0;
+
+function startGallery() {
+    if (memories.length === 0) return;
+
+    if (galleryInterval) {
+        clearInterval(galleryInterval);
+    }
+
+    memories.forEach(memory => {
+        memory.classList.remove("visible");
+    });
+
+    currentMemory = 0;
+    memories[currentMemory].classList.add("visible");
+
+    galleryInterval = setInterval(nextPhoto, 5500);
+}
+
+function nextPhoto() {
+    if (memories.length === 0) return;
+
+    memories[currentMemory].classList.remove("visible");
+    currentMemory = (currentMemory + 1) % memories.length;
+    memories[currentMemory].classList.add("visible");
+}
+
+function prevPhoto() {
+    if (memories.length === 0) return;
+
+    memories[currentMemory].classList.remove("visible");
+    currentMemory = (currentMemory - 1 + memories.length) % memories.length;
+    memories[currentMemory].classList.add("visible");
+}
+
+const continueGallery = document.getElementById("continueGallery");
+
+if (continueGallery) {
+    continueGallery.addEventListener("click", () => {
+        if (galleryInterval) {
+            clearInterval(galleryInterval);
+        }
+        showScreen(3); // Muestra la carta (pantalla 3)
+        startLetter();
+    });
+}
+
+/* =====================================================
+SWIPE GALLERY
+===================================================== */
+
+let touchStartX = 0;
+const gallery = document.getElementById("gallery");
+
+if (gallery) {
+    gallery.addEventListener("touchstart", event => {
+        touchStartX = event.touches[0].clientX;
+    }, { passive: true });
+
+    gallery.addEventListener("touchend", event => {
+        const endX = event.changedTouches[0].clientX;
+        if (endX < touchStartX - 60) {
+            nextPhoto();
+        } else if (endX > touchStartX + 60) {
+            prevPhoto();
+        }
+    }, { passive: true });
+}
+
+/* =====================================================
+LETTER
+===================================================== */
+
+// Se remueve "Dear Sofia" del string porque el HTML ya lo tiene en el h2
+const letter = `Sometimes life surprises us.
+
+I never expected to meet someone who could make ordinary moments feel special.
+
+Thank you for every smile,
+every conversation,
+every hug,
+and every memory.
+
+You have made my life brighter.`;
+
+let letterIndex = 0;
+let letterTimer = null;
+
+function startLetter() {
+    const target = document.getElementById("typedLetter");
+    const continueBtn = document.getElementById("continueLetter");
+    
+    if (!target) return;
+
+    target.textContent = "";
+    letterIndex = 0;
+
+    if (letterTimer) {
+        clearInterval(letterTimer);
+    }
+
+    letterTimer = setInterval(() => {
+        target.textContent = letter.substring(0, letterIndex);
+        letterIndex++;
+
+        if (letterIndex > letter.length) {
+            clearInterval(letterTimer);
+            letterTimer = null;
+            
+            // Mostrar botón cuando termine de escribir la carta
+            if (continueBtn) {
+                continueBtn.style.display = "inline-block";
+                continueBtn.style.opacity = "1";
+                continueBtn.style.visibility = "visible";
+            }
+        }
+    }, 35);
+}
+
+// Avance al presionar el botón Continue en la carta
+const continueLetter = document.getElementById("continueLetter");
+
+if (continueLetter) {
+    continueLetter.addEventListener("click", () => {
+        if (letterTimer) clearInterval(letterTimer);
+        
+        // Muestra la pantalla de transición "There is only one thing left to ask..." (Pantalla 4)
+        showScreen(4);
+
+        // Espera 3.5 segundos en la transición y pasa a la propuesta (Pantalla 5)
+        setTimeout(() => {
+            showScreen(5);
+        }, 3500);
+    });
+}
+
+/* =====================================================
+PROPOSAL
+===================================================== */
+
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+
+function moveNoButton() {
+    const proposal = document.querySelector(".proposalCard");
+    if (!proposal || !noBtn) return;
+
+    const btnWidth = noBtn.offsetWidth || 100;
+    const btnHeight = noBtn.offsetHeight || 40;
+
+    const maxX = Math.max(0, proposal.clientWidth - btnWidth - 20);
+    const maxY = Math.max(0, proposal.clientHeight - btnHeight - 20);
+
+    noBtn.style.position = "absolute";
+    noBtn.style.left = Math.floor(Math.random() * maxX + 10) + "px";
+    noBtn.style.top = Math.floor(Math.random() * maxY + 10) + "px";
+}
+
+if (noBtn) {
+    noBtn.addEventListener("mouseenter", moveNoButton);
+    noBtn.addEventListener("touchstart", (event) => {
+        event.preventDefault();
+        moveNoButton();
+    }, { passive: false });
+}
+
+if (yesBtn) {
+    yesBtn.addEventListener("click", () => {
+        if (navigator.vibrate) {
+            navigator.vibrate([80, 50, 80]);
+        }
+        saveRelationship();
+    });
+}
+
+/* =====================================================
+SAVE RELATIONSHIP
+===================================================== */
+
+function saveRelationship() {
+    const now = Date.now();
+    localStorage.setItem("relationshipDate", now);
+    
+    // Muestra pantalla de guardado (Pantalla 6)
+    showScreen(6);
+    startSaving();
+}
+
+/* =====================================================
+SAVING
+===================================================== */
+
+function startSaving() {
+    const bar = document.getElementById("savingProgress");
+    if (!bar) {
+        showCelebration();
+        return;
+    }
+
+    let progress = 0;
+    bar.style.width = "0%";
+
+    const timer = setInterval(() => {
+        progress++;
+        bar.style.width = progress + "%";
+
+        if (progress >= 100) {
+            clearInterval(timer);
+            showCelebration();
+        }
+    }, 35);
+}
+
+/* =====================================================
+CELEBRATION
+===================================================== */
+
+function showCelebration() {
+    // Muestra pantalla de celebración con el contador (Pantalla 7)
+    showScreen(7);
+    launchConfetti();
+    startCounter();
+}
+
+/* =====================================================
+COUNTER
+===================================================== */
+
+function startCounter() {
+    const saved = Number(localStorage.getItem("relationshipDate"));
+    if (!saved) return;
+
+    updateCounter(saved);
+
+    if (counterInterval) {
+        clearInterval(counterInterval);
+    }
+
+    counterInterval = setInterval(() => {
+        updateCounter(saved);
+    }, 1000);
+}
+
+function updateCounter(start) {
+    const diff = Math.floor((Date.now() - start) / 1000);
+
+    const years = Math.floor(diff / 31536000);
+    const months = Math.floor((diff % 31536000) / 2592000);
+    const days = Math.floor((diff % 2592000) / 86400);
+
+    const hours = Math.floor((diff % 86400) / 3600);
+    const minutes = Math.floor((diff % 3600) / 60);
+    const seconds = diff % 60;
+
+    const elYears = document.getElementById("years");
+    const elMonths = document.getElementById("months");
+    const elDays = document.getElementById("days");
+    const elHours = document.getElementById("hours");
+    const elMinutes = document.getElementById("minutes");
+    const elSeconds = document.getElementById("seconds");
+
+    if (elYears) elYears.textContent = years;
+    if (elMonths) elMonths.textContent = months;
+    if (elDays) elDays.textContent = days;
+
+    if (elHours) elHours.textContent = String(hours).padStart(2, "0");
+    if (elMinutes) elMinutes.textContent = String(minutes).padStart(2, "0");
+    if (elSeconds) elSeconds.textContent = String(seconds).padStart(2, "0");
+}
+
+/* =====================================================
+CONFETTI
+===================================================== */
+
+const canvas = document.getElementById("confetti");
+const ctx = canvas ? canvas.getContext("2d") : null;
+const pieces = [];
+
+function initConfetti() {
+    if (!canvas) return;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    pieces.length = 0;
+    for (let i = 0; i < 150; i++) {
+        pieces.push({
+            x: Math.random() * canvas.width,
+            y: -Math.random() * canvas.height,
+            r: 2 + Math.random() * 4,
+            vx: (Math.random() - 0.5) * 2,
+            vy: 2 + Math.random() * 3
+        });
+    }
+}
+
+function launchConfetti() {
+    if (!ctx) return;
+    initConfetti();
+
+    if (confettiAnimationId) {
+        cancelAnimationFrame(confettiAnimationId);
+    }
+    animateConfetti();
+}
+
+function animateConfetti() {
+    if (!ctx || currentScreen !== 7) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    pieces.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = "#ffffff";
+        ctx.fill();
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.y > canvas.height) {
+            p.y = -10;
+            p.x = Math.random() * canvas.width;
+        }
+    });
+
+    confettiAnimationId = requestAnimationFrame(animateConfetti);
+}
+
+/* =====================================================
+FLOATING HEARTS
+===================================================== */
+
+const heartContainer = document.getElementById("heartContainer");
+
+function createHeart() {
+    if (!heartContainer) return;
+
+    const heart = document.createElement("div");
+    heart.className = "floatingHeart";
+    heart.textContent = "❤";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (18 + Math.random() * 20) + "px";
+    heart.style.animationDuration = (5 + Math.random() * 4) + "s";
+
+    heartContainer.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 9000);
+}
+
+setInterval(() => {
+    if (currentScreen === 7) {
+        createHeart();
+    }
+}, 800);
+
+/* =====================================================
+SPARKLES
+===================================================== */
+
+const sparkleContainer = document.getElementById("sparkleContainer");
+
+function createSparkle() {
+    if (!sparkleContainer) return;
+
+    const star = document.createElement("span");
+    star.className = "sparkle";
+    star.style.left = Math.random() * 100 + "vw";
+    star.style.top = Math.random() * 100 + "vh";
+
+    sparkleContainer.appendChild(star);
+
+    setTimeout(() => {
+        star.remove();
+    }, 3000);
+}
+
+setInterval(() => {
+    if (currentScreen === 7) {
+        createSparkle();
+    }
+}, 350);
+
+/* =====================================================
+INSTALL
+===================================================== */
+
+let deferredPrompt = null;
+
+window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    deferredPrompt = event;
+
+    const card = document.getElementById("installCard");
+    if (card) {
+        card.classList.remove("installHidden");
+    }
+});
+
+const installButton = document.getElementById("installButton");
+
+if (installButton) {
+    installButton.addEventListener("click", async () => {
+        if (!deferredPrompt) return;
+
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+
+        const card = document.getElementById("installCard");
+        if (card) card.classList.add("installHidden");
+    });
+}
+
+const laterButton = document.getElementById("laterButton");
+
+if (laterButton) {
+    laterButton.addEventListener("click", () => {
+        const card = document.getElementById("installCard");
+        if (card) card.classList.add("installHidden");
+    });
+}
+
+/* =====================================================
+RESIZE HANDLER
+===================================================== */
+
+window.addEventListener("resize", () => {
+    if (canvas && currentScreen === 7) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+});
+
+/* =====================================================
+END
+===================================================== */
+
+console.log(
+    "%cFor Sofia ❤️",
+    "font-size:22px;color:white;font-family:serif;"
+);
