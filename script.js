@@ -6,9 +6,10 @@ let counterInterval = null;
 let galleryInterval = null;
 let activeGalleryIndex = 0;
 
-// FECHA DE INICIO ABSOLUTA Y PERMANENTE
-// 7 horas y 20 minutos atrás desde este momento exacto
-const START_TIMESTAMP = Date.now() - ((7 * 3600 + 20 * 60) * 1000);
+// TIMESTAMP ABSOLUTO E INMUTABLE:
+// Representa la hora exacta de inicio fija (19 Sep 2026, 16:07:00 UTC)
+// Es decir, exactamente 7 horas y 20 minutos antes de las 23:27 de tu captura.
+const FIXED_START_TIMESTAMP = 1789834020000;
 
 // English Letter Content
 const letterText = `From the very first day, I knew you were someone truly special.\nThank you for all the amazing moments we've shared, and for loving me even when I start acting weird!\n\nThis little application is a special place kept just for the two of us.`;
@@ -141,22 +142,22 @@ function showCelebration() {
 }
 
 function startCounter() {
-    // Forzamos el renderizado inmediato con la hora guardada
-    updateCounter(START_TIMESTAMP);
+    // Renderizado inmediato
+    updateCounter();
 
     if (counterInterval) {
         clearInterval(counterInterval);
     }
 
-    // Actualiza cada 1 segundo en tiempo real
+    // Bucle de actualización continuo cada 1 segundo
     counterInterval = setInterval(() => {
-        updateCounter(START_TIMESTAMP);
+        updateCounter();
     }, 1000);
 }
 
-function updateCounter(startTimestamp) {
-    const now = Date.now();
-    const diff = Math.max(0, Math.floor((now - startTimestamp) / 1000));
+function updateCounter() {
+    // Restamos el instante actual menos el timestamp fijo del pasado
+    const diff = Math.max(0, Math.floor((Date.now() - FIXED_START_TIMESTAMP) / 1000));
 
     const years = Math.floor(diff / 31536000);
     const months = Math.floor((diff % 31536000) / 2592000);
