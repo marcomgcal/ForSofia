@@ -1,34 +1,14 @@
-/* =====================================
-   FOR SOFIA
-   Created with ❤️ by Marco
-===================================== */
-
-console.log("For Sofia loaded ❤️");
-
 /* =====================================================
-APP STATE & NAVIGATION BY ID
+   ESTADO GLOBAL Y VARIABLES
 ===================================================== */
-
-const screens = document.querySelectorAll(".screen");
-
-let galleryInterval = null;
+let currentScreen = 'welcome';
 let counterInterval = null;
-let confettiAnimationId = null;
 
-function showScreenById(screenId) {
-    screens.forEach(screen => {
-        if (screen.id === screenId) {
-            screen.classList.add("active");
-        } else {
-            screen.classList.remove("active");
-        }
-    });
-}
+const letterText = `Querida Sofía,\n\nDesde el primer día supe que eras alguien muy especial.\nGracias por cada risa, cada abrazo y cada momento compartido.\n\nEsta pequeña aplicación es un rinconcito guardado solo para los dos.`;
 
 /* =====================================================
-INITIALIZATION & RESTORE SESSION
+   INICIALIZACIÓN Y RESTAURACIÓN DE SESIÓN (PWA FIX)
 ===================================================== */
-
 window.addEventListener("load", () => {
     // Esconder Loader
     const loader = document.getElementById("loader");
@@ -41,287 +21,119 @@ window.addEventListener("load", () => {
         }, 2400);
     }
 
-    // Verificar si ya había una fecha guardada
-    const saved = localStorage.getItem("relationshipDate");
-    if (saved) {
+    // Comprobar si ya existe una fecha guardada
+    const savedDate = localStorage.getItem("relationshipDate");
+    if (savedDate) {
         showCelebration();
+    } else {
+        createFloatingHearts();
     }
 });
 
 /* =====================================================
-BEGIN
+   NAVEGACIÓN ENTRE PANTALLAS
 ===================================================== */
+function showScreenById(screenId) {
+    const screens = document.querySelectorAll('.screen');
+    screens.forEach(s => s.classList.remove('active'));
 
-const beginBtn = document.getElementById("beginBtn");
+    const target = document.getElementById(screenId);
+    if (target) {
+        target.classList.add('active');
+        currentScreen = screenId;
 
-if (beginBtn) {
-    beginBtn.addEventListener("click", () => {
-        showScreenById("intro");
-
-        setTimeout(() => {
-            showScreenById("gallery");
-            startGallery();
-        }, 3200);
-    });
-}
-
-/* =====================================================
-GALLERY
-===================================================== */
-
-const memories = document.querySelectorAll(".memory");
-let currentMemory = 0;
-
-function startGallery() {
-    if (memories.length === 0) return;
-
-    if (galleryInterval) {
-        clearInterval(galleryInterval);
+        if (screenId === 'letter') {
+            typeWriter();
+        }
     }
-
-    memories.forEach(memory => {
-        memory.classList.remove("visible");
-    });
-
-    currentMemory = 0;
-    memories[currentMemory].classList.add("visible");
-
-    galleryInterval = setInterval(nextPhoto, 5500);
 }
 
-function nextPhoto() {
-    if (memories.length === 0) return;
-
-    memories[currentMemory].classList.remove("visible");
-    currentMemory = (currentMemory + 1) % memories.length;
-    memories[currentMemory].classList.add("visible");
-}
-
-function prevPhoto() {
-    if (memories.length === 0) return;
-
-    memories[currentMemory].classList.remove("visible");
-    currentMemory = (currentMemory - 1 + memories.length) % memories.length;
-    memories[currentMemory].classList.add("visible");
-}
-
-const continueGallery = document.getElementById("continueGallery");
-
-if (continueGallery) {
-    continueGallery.addEventListener("click", () => {
-        if (galleryInterval) {
-            clearInterval(galleryInterval);
-        }
-        showScreenById("letter");
-        startLetter();
-    });
+function nextScreen(screenId) {
+    showScreenById(screenId);
 }
 
 /* =====================================================
-SWIPE GALLERY
+   EFECTO ESCRIBIR CARTA
 ===================================================== */
+let typed = false;
+function typeWriter() {
+    if (typed) return;
+    typed = true;
 
-let touchStartX = 0;
-const gallery = document.getElementById("gallery");
+    const el = document.getElementById("typedLetter");
+    const btn = document.getElementById("continueLetter");
+    let i = 0;
 
-if (gallery) {
-    gallery.addEventListener("touchstart", event => {
-        touchStartX = event.touches[0].clientX;
-    }, { passive: true });
-
-    gallery.addEventListener("touchend", event => {
-        const endX = event.changedTouches[0].clientX;
-        if (endX < touchStartX - 60) {
-            nextPhoto();
-        } else if (endX > touchStartX + 60) {
-            prevPhoto();
+    function type() {
+        if (i < letterText.length) {
+            el.textContent += letterText.charAt(i);
+            i++;
+            setTimeout(type, 35);
+        } else {
+            if (btn) btn.style.display = "inline-block";
         }
-    }, { passive: true });
-}
-
-/* =====================================================
-LETTER
-===================================================== */
-
-const letter = `Sometimes life surprises us.
-
-I never expected to meet someone who could make ordinary moments feel special.
-
-Thank you for every smile,
-every conversation,
-every hug,
-and every memory.
-
-You have made my life brighter.`;
-
-let letterIndex = 0;
-let letterTimer = null;
-
-function goToTransition() {
-    showScreenById("transition");
-
-    setTimeout(() => {
-        showScreenById("proposal");
-    }, 3500);
-}
-
-function startLetter() {
-    const target = document.getElementById("typedLetter");
-    const continueBtn = document.getElementById("continueLetter");
-    
-    if (!target) return;
-
-    target.textContent = "";
-    letterIndex = 0;
-
-    if (letterTimer) {
-        clearInterval(letterTimer);
     }
-
-    letterTimer = setInterval(() => {
-        target.textContent = letter.substring(0, letterIndex);
-        letterIndex++;
-
-        if (letterIndex > letter.length) {
-            clearInterval(letterTimer);
-            letterTimer = null;
-            
-            if (continueBtn) {
-                continueBtn.style.display = "block";
-                continueBtn.style.opacity = "1";
-                continueBtn.style.visibility = "visible";
-                continueBtn.classList.add("visible");
-            }
-
-            setTimeout(() => {
-                const letterScreen = document.getElementById("letter");
-                if (letterScreen && letterScreen.classList.contains("active")) {
-                    goToTransition();
-                }
-            }, 2500);
-        }
-    }, 35);
-}
-
-const continueLetter = document.getElementById("continueLetter");
-
-if (continueLetter) {
-    continueLetter.addEventListener("click", () => {
-        if (letterTimer) {
-            clearInterval(letterTimer);
-            letterTimer = null;
-        }
-        goToTransition();
-    });
+    type();
 }
 
 /* =====================================================
-PROPOSAL
+   GUARDAR FECHA Y ANIMACIÓN SAVING
 ===================================================== */
-
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-
-function moveNoButton() {
-    const proposal = document.querySelector(".proposalCard");
-    if (!proposal || !noBtn) return;
-
-    const btnWidth = noBtn.offsetWidth || 100;
-    const btnHeight = noBtn.offsetHeight || 40;
-
-    const maxX = Math.max(0, proposal.clientWidth - btnWidth - 20);
-    const maxY = Math.max(0, proposal.clientHeight - btnHeight - 20);
-
-    noBtn.style.position = "absolute";
-    noBtn.style.left = Math.floor(Math.random() * maxX + 10) + "px";
-    noBtn.style.top = Math.floor(Math.random() * maxY + 10) + "px";
-}
-
-if (noBtn) {
-    noBtn.addEventListener("mouseenter", moveNoButton);
-    noBtn.addEventListener("touchstart", (event) => {
-        event.preventDefault();
-        moveNoButton();
-    }, { passive: false });
-}
-
-if (yesBtn) {
-    yesBtn.addEventListener("click", () => {
-        if (navigator.vibrate) {
-            navigator.vibrate([80, 50, 80]);
-        }
-        saveRelationship();
-    });
-}
-
-/* =====================================================
-SAVE RELATIONSHIP
-===================================================== */
-
 function saveRelationship() {
-    const now = Date.now();
-    localStorage.setItem("relationshipDate", now);
-    
+    // Guardar fecha ISO compatible con iOS
+    const nowIso = new Date().toISOString();
+    localStorage.setItem("relationshipDate", nowIso);
+
     showScreenById("saving");
     startSaving();
 }
 
-/* =====================================================
-SAVING
-===================================================== */
-
 function startSaving() {
     const bar = document.getElementById("savingProgress");
-    if (!bar) {
-        showCelebration();
-        return;
-    }
-
     let progress = 0;
-    bar.style.width = "0%";
 
-    const timer = setInterval(() => {
-        progress++;
-        bar.style.width = progress + "%";
+    const interval = setInterval(() => {
+        progress += 5;
+        if (bar) bar.style.width = progress + "%";
 
         if (progress >= 100) {
-            clearInterval(timer);
-            showCelebration();
+            clearInterval(interval);
+            setTimeout(() => {
+                showCelebration();
+            }, 400);
         }
-    }, 35);
+    }, 100);
 }
 
 /* =====================================================
-CELEBRATION
+   CELEBRACIÓN & CONTADOR
 ===================================================== */
-
 function showCelebration() {
     showScreenById("celebration");
-    launchConfetti();
+    triggerConfetti();
     startCounter();
 }
 
-/* =====================================================
-COUNTER
-===================================================== */
-
 function startCounter() {
-    const saved = Number(localStorage.getItem("relationshipDate"));
-    if (!saved) return;
+    const savedDateStr = localStorage.getItem("relationshipDate");
+    if (!savedDateStr) return;
 
-    updateCounter(saved);
+    const startTimestamp = new Date(savedDateStr).getTime();
+    if (isNaN(startTimestamp)) return;
+
+    updateCounter(startTimestamp);
 
     if (counterInterval) {
         clearInterval(counterInterval);
     }
 
     counterInterval = setInterval(() => {
-        updateCounter(saved);
+        updateCounter(startTimestamp);
     }, 1000);
 }
 
-function updateCounter(start) {
-    const diff = Math.floor((Date.now() - start) / 1000);
+function updateCounter(startTimestamp) {
+    const diff = Math.max(0, Math.floor((Date.now() - startTimestamp) / 1000));
 
     const years = Math.floor(diff / 31536000);
     const months = Math.floor((diff % 31536000) / 2592000);
@@ -348,180 +160,34 @@ function updateCounter(start) {
 }
 
 /* =====================================================
-CONFETTI
+   EFECTOS EXTRA
 ===================================================== */
-
-const canvas = document.getElementById("confetti");
-const ctx = canvas ? canvas.getContext("2d") : null;
-const pieces = [];
-
-function initConfetti() {
-    if (!canvas) return;
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    pieces.length = 0;
-    for (let i = 0; i < 150; i++) {
-        pieces.push({
-            x: Math.random() * canvas.width,
-            y: -Math.random() * canvas.height,
-            r: 2 + Math.random() * 4,
-            vx: (Math.random() - 0.5) * 2,
-            vy: 2 + Math.random() * 3
+function triggerConfetti() {
+    if (typeof confetti === 'function') {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
         });
     }
 }
 
-function launchConfetti() {
-    if (!ctx) return;
-    initConfetti();
+function createFloatingHearts() {
+    const container = document.getElementById("heartContainer");
+    if (!container) return;
 
-    if (confettiAnimationId) {
-        cancelAnimationFrame(confettiAnimationId);
-    }
-    animateConfetti();
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("floatingHeart");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 15 + 12) + "px";
+        heart.style.animationDuration = (Math.random() * 3 + 5) + "s";
+
+        container.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 8000);
+    }, 1200);
 }
-
-function animateConfetti() {
-    const celebrationScreen = document.getElementById("celebration");
-    if (!ctx || !celebrationScreen || !celebrationScreen.classList.contains("active")) return;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    pieces.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = "#ffffff";
-        ctx.fill();
-
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.y > canvas.height) {
-            p.y = -10;
-            p.x = Math.random() * canvas.width;
-        }
-    });
-
-    confettiAnimationId = requestAnimationFrame(animateConfetti);
-}
-
-/* =====================================================
-FLOATING HEARTS
-===================================================== */
-
-const heartContainer = document.getElementById("heartContainer");
-
-function createHeart() {
-    if (!heartContainer) return;
-
-    const heart = document.createElement("div");
-    heart.className = "floatingHeart";
-    heart.textContent = "❤";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (18 + Math.random() * 20) + "px";
-    heart.style.animationDuration = (5 + Math.random() * 4) + "s";
-
-    heartContainer.appendChild(heart);
-
-    setTimeout(() => {
-        heart.remove();
-    }, 9000);
-}
-
-setInterval(() => {
-    const celebrationScreen = document.getElementById("celebration");
-    if (celebrationScreen && celebrationScreen.classList.contains("active")) {
-        createHeart();
-    }
-}, 800);
-
-/* =====================================================
-SPARKLES
-===================================================== */
-
-const sparkleContainer = document.getElementById("sparkleContainer");
-
-function createSparkle() {
-    if (!sparkleContainer) return;
-
-    const star = document.createElement("span");
-    star.className = "sparkle";
-    star.style.left = Math.random() * 100 + "vw";
-    star.style.top = Math.random() * 100 + "vh";
-
-    sparkleContainer.appendChild(star);
-
-    setTimeout(() => {
-        star.remove();
-    }, 3000);
-}
-
-setInterval(() => {
-    const celebrationScreen = document.getElementById("celebration");
-    if (celebrationScreen && celebrationScreen.classList.contains("active")) {
-        createSparkle();
-    }
-}, 350);
-
-/* =====================================================
-INSTALL
-===================================================== */
-
-let deferredPrompt = null;
-
-window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    deferredPrompt = event;
-
-    const card = document.getElementById("installCard");
-    if (card) {
-        card.classList.remove("installHidden");
-    }
-});
-
-const installButton = document.getElementById("installButton");
-
-if (installButton) {
-    installButton.addEventListener("click", async () => {
-        if (!deferredPrompt) return;
-
-        deferredPrompt.prompt();
-        await deferredPrompt.userChoice;
-        deferredPrompt = null;
-
-        const card = document.getElementById("installCard");
-        if (card) card.classList.add("installHidden");
-    });
-}
-
-const laterButton = document.getElementById("laterButton");
-
-if (laterButton) {
-    laterButton.addEventListener("click", () => {
-        const card = document.getElementById("installCard");
-        if (card) card.classList.add("installHidden");
-    });
-}
-
-/* =====================================================
-RESIZE HANDLER
-===================================================== */
-
-window.addEventListener("resize", () => {
-    const celebrationScreen = document.getElementById("celebration");
-    if (canvas && celebrationScreen && celebrationScreen.classList.contains("active")) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-});
-
-/* =====================================================
-END
-===================================================== */
-
-console.log(
-    "%cFor Sofia ❤️",
-    "font-size:22px;color:white;font-family:serif;"
-);
