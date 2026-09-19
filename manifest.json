@@ -1,19 +1,20 @@
 {
-  "name": "For Sofia",
-  "short_name": "For Sofia",
-  "description": "A special experience made with love ❤️",
-  "start_url": "./",
-  "scope": "./",
+  "name": "Us",
+  "short_name": "Us",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
-  "orientation": "portrait",
   "icons": [
     {
-      "src": "041569D8-1E29-4ADB-8D2C-907D2EEA402F.png",
+      "src": "icon-180x180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-180x180.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
