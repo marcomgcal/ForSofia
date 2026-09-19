@@ -1,668 +1,132 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <!-- Configuración para App iOS / PWA -->
+    <title>Us</title>
+    <meta name="apple-mobile-web-app-title" content="Us">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
 
-<meta charset="UTF-8">
+    <!-- Iconos y Manifest -->
+    <link rel="apple-touch-icon" href="icon-180x180.png">
+    <link rel="icon" type="image/png" href="icon-180x180.png">
+    <link rel="manifest" href="manifest.json">
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+    <!-- Fuentes Modernas: Plus Jakarta Sans & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
-<title>For Sofia ❤️</title>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-<meta name="theme-color" content="#000000">
-
-<meta name="apple-mobile-web-app-capable" content="yes">
-
-<meta name="apple-mobile-web-app-status-bar-style"
-content="black-translucent">
-
-<meta name="apple-mobile-web-app-title"
-content="For Sofia">
-
-<link rel="manifest"
-href="manifest.json">
-
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
-
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
-rel="stylesheet">
-
-<link rel="stylesheet"
-href="style.css">
-
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div id="loader">
-
-<h1>For Sofia</h1>
-
-<p>
-
-Preparing something special...
-
-</p>
-
-<div class="loaderBar">
-
-<div class="loaderProgress"></div>
-
-</div>
-
-</div>
-
-<main id="app">
-
-<section
-id="welcome"
-class="screen active">
-
-<div class="center">
-
-<p class="eyebrow">
-
-Made with love by Marco
-
-</p>
-
-<h1>
-
-For Sofia
-
-</h1>
-
-<p class="subtitle">
-
-Some stories
-
-are worth remembering.
-
-<br><br>
-
-Ours
-
-is worth living.
-
-</p>
-
-<button id="beginBtn">
-
-Begin ❤️
-
-</button>
-
-</div>
-
-</section>
-
-<section
-id="intro"
-class="screen">
-
-<div class="center cinematic">
-
-<p class="line">
-
-Sometimes...
-
-</p>
-
-<p class="line">
-
-Life changes
-
-</p>
-
-<p class="line">
-
-without making
-
-any noise.
-
-</p>
-
-</div>
-
-</section>
-
-<section
-id="gallery"
-class="screen">
-
-<article class="memory visible">
-
-<img
-src="3E532DB9-1744-4FA3-B695-7530707F9E5F.jpeg"
-alt="Photo 1">
-
-<div class="overlay"></div>
-
-<div class="memoryText">
-
-<h2>
-
-Sometimes...
-
-</h2>
-
-<p>
-
-The best things
-
-happen when
-
-you least expect them.
-
-</p>
-
-</div>
-
-</article>
-
-<article class="memory">
-
-<img
-src="645BDD27-2ACF-427F-8FB8-E530815554EF.jpeg"
-alt="Photo 2">
-
-<div class="overlay"></div>
-
-<div class="memoryText">
-
-<h2>
-
-Then...
-
-</h2>
-
-<p>
-
-There were
-
-conversations,
-
-laughs,
-
-and moments
-
-I never wanted
-
-to end.
-
-</p>
-
-</div>
-
-</article>
-
-<article class="memory">
-
-<img
-src="D96AAB3F-820E-4A5B-94A3-75F0CD6899A4.jpeg"
-alt="Photo 3">
-
-<div class="overlay"></div>
-
-<div class="memoryText">
-
-<h2>
-
-Little by little...
-
-</h2>
-
-<p>
-
-You became
-
-my favourite place.
-
-</p>
-
-</div>
-
-</article>
-
-<article class="memory">
-
-<img
-src="041569D8-1E29-4ADB-8D2C-907D2EEA402F.png"
-alt="Photo 4">
-
-<div class="overlay"></div>
-
-<div class="memoryText">
-
-<h2>
-
-And then...
-
-</h2>
-
-<p>
-
-I realised
-
-I wanted
-
-many more memories
-
-with you.
-
-</p>
-
-</div>
-
-</article>
-
-<button
-id="continueGallery"
-class="primaryButton">
-
-Continue ❤️
-
-</button>
-
-</section>
-
-<section
-id="letter"
-class="screen">
-
-<div class="letterCard">
-
-<h2>
-
-Dear Sofia,
-
-</h2>
-
-<div id="typedLetter"></div>
-
-<button
-id="continueLetter">
-
-Continue
-
-</button>
-
-</div>
-
-</section>
-
-<section
-id="transition"
-class="screen">
-
-<div class="center">
-
-<p>
-
-There is
-
-only one thing
-
-left to ask...
-
-</p>
-
-</div>
-
-</section>
-
-<section
-id="proposal"
-class="screen">
-
-<div class="proposalCard">
-
-<p class="small">
-
-Marco ❤️ Sofia
-
-</p>
-
-<h1>
-
-Will you officially
-
-be by my side...
-
-</h1>
-
-<h2>
-
-from today on?
-
-</h2>
-
-<p>
-
-I don't promise
-
-a perfect life.
-
-But I promise
-
-that every day
-
-I'll choose you.
-
-</p>
-
-<div class="buttons">
-
-<button
-id="yesBtn">
-
-Yes ❤️
-
-</button>
-
-<button
-id="noBtn">
-
-No 🤍
-
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ===================================================== -->
-<!-- SAVING -->
-<!-- ===================================================== -->
-
-<section
-id="saving"
-class="screen">
-
-<div class="center">
-
-<h2>
-
-Some moments
-
-deserve to
-
-last forever.
-
-</h2>
-
-<p>
-
-Let's save ours...
-
-</p>
-
-<div class="savingBar">
-
-<div id="savingProgress">
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ===================================================== -->
-<!-- CELEBRATION -->
-<!-- ===================================================== -->
-
-<section
-id="celebration"
-class="screen">
-
-<canvas
-id="confetti">
-
-</canvas>
-
-<div class="celebrationContent">
-
-<h1>
-
-Marco ❤️ Sofia
-
-</h1>
-
-<p>
-
-Together for
-
-</p>
-
-<div id="counter">
-
-<div class="timeBox">
-
-<span id="years">0</span>
-
-<label>Years</label>
-
-</div>
-
-<div class="timeBox">
-
-<span id="months">0</span>
-
-<label>Months</label>
-
-</div>
-
-<div class="timeBox">
-
-<span id="days">0</span>
-
-<label>Days</label>
-
-</div>
-
-<div class="timeBox">
-
-<span id="hours">00</span>
-
-<label>Hours</label>
-
-</div>
-
-<div class="timeBox">
-
-<span id="minutes">00</span>
-
-<label>Minutes</label>
-
-</div>
-
-<div class="timeBox">
-
-<span id="seconds">00</span>
-
-<label>Seconds</label>
-
-</div>
-
-</div>
-
-<p>
-
-Every second
-with you
-is my favourite one.
-
-</p>
-
-</div>
-
-</section>
-
-<!-- ===================================================== -->
-<!-- FINAL SCENE -->
-<!-- ===================================================== -->
-
-<section
-id="finalScene"
-class="screen">
-
-<div class="finalContent">
-
-<h1>
-
-Forever
-Starts Here
-
-</h1>
-
-<p>
-
-Thank you
-for saying yes.
-
-</p>
-
-<p class="signature">
-
-Marco ❤️ Sofia
-
-</p>
-
-</div>
-
-</section>
-
-</main>
-
-<!-- ===================================================== -->
-<!-- EFFECTS -->
-<!-- ===================================================== -->
-
-<div id="starsLayer"></div>
-
-<div id="shootingStars"></div>
-
-<div id="heartContainer"></div>
-
-<div id="sparkleContainer"></div>
-
-<!-- ===================================================== -->
-<!-- INSTALL CARD -->
-<!-- ===================================================== -->
-
-<div
-id="installCard"
-class="installHidden">
-
-<div class="installBox">
-
-<h2>
-
-Install
-For Sofia
-
-</h2>
-
-<p>
-
-Add this experience
-to your Home Screen
-and keep it forever.
-
-</p>
-
-<div class="installButtons">
-
-<button
-id="installButton">
-
-Install
-
-</button>
-
-<button
-id="laterButton">
-
-Later
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- ===================================================== -->
-<!-- AUDIO -->
-<!-- ===================================================== -->
-
-<audio
-id="backgroundMusic"
-preload="none">
-
-<!--
-audio/music.mp3
--->
-
-</audio>
-
-<!-- ===================================================== -->
-<!-- PRELOAD IMAGES -->
-<!-- ===================================================== -->
-
-<link
-rel="preload"
-href="3E532DB9-1744-4FA3-B695-7530707F9E5F.jpeg"
-as="image">
-
-<link
-rel="preload"
-href="645BDD27-2ACF-427F-8FB8-E530815554EF.jpeg"
-as="image">
-
-<link
-rel="preload"
-href="D96AAB3F-820E-4A5B-94A3-75F0CD6899A4.jpeg"
-as="image">
-
-<link
-rel="preload"
-href="041569D8-1E29-4ADB-8D2C-907D2EEA402F.png"
-as="image">
-
-<!-- ===================================================== -->
-<!-- JAVASCRIPT -->
-<!-- ===================================================== -->
-
-<script
-src="script.js"></script>
-
-<script>
-
-if("serviceWorker" in navigator){
-
-window.addEventListener("load",()=>{
-
-navigator.serviceWorker.register("sw.js");
-
-});
-
-}
-
-</script>
-
+    <div id="app">
+
+        <!-- LOADER INICIAL -->
+        <div id="loader">
+            <h1>Us</h1>
+            <p>Cargando nuestra historia...</p>
+            <div class="loaderBar">
+                <div class="loaderProgress"></div>
+            </div>
+        </div>
+
+        <!-- PANTALLA 1: WELCOME -->
+        <section id="welcome" class="screen active">
+            <div class="center">
+                <p class="eyebrow">UNA HISTORIA ESPECIAL</p>
+                <h1>Hola, Sofía ❤️</h1>
+                <p class="subtitle">Tengo algo preparado solo para ti.</p>
+                <button onclick="nextScreen('intro')">Empezar</button>
+            </div>
+        </section>
+
+        <!-- PANTALLA 2: INTRO CINEMÁTICA -->
+        <section id="intro" class="screen">
+            <div class="center cinematic">
+                <p class="line">Hay momentos que cambian todo...</p>
+                <p class="line">Y lugares que jamás se olvidan.</p>
+                <button onclick="nextScreen('letter')" style="margin-top: 25px;">Continuar</button>
+            </div>
+        </section>
+
+        <!-- PANTALLA 3: CARTA INTERACTIVA -->
+        <section id="letter" class="screen">
+            <div class="letterCard">
+                <h2>Para ti</h2>
+                <div id="typedLetter"></div>
+                <button id="continueLetter" onclick="nextScreen('gallery')">Ver recuerdos</button>
+            </div>
+        </section>
+
+        <!-- PANTALLA 4: GALERÍA DE RECUERDOS -->
+        <section id="gallery" class="screen">
+            <div class="memory visible" data-index="0">
+                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80" alt="Memory 1">
+                <div class="overlay"></div>
+                <div class="memoryText">
+                    <h2>Nuestros momentos</h2>
+                    <p>Cada instante a tu lado se convierte en mi recuerdo favorito.</p>
+                </div>
+            </div>
+            <button id="continueGallery" onclick="nextScreen('proposal')">Continuar</button>
+        </section>
+
+        <!-- PANTALLA 5: PROPUESTA -->
+        <section id="proposal" class="screen">
+            <div class="proposalCard">
+                <p class="small">UNA PREGUNTA ESPECIAL</p>
+                <h2>¿Quieres ser mi novia?</h2>
+                <p>Prometo hacerte sonreír todos los días.</p>
+                <div class="buttons">
+                    <button id="yesBtn" onclick="saveRelationship()">¡Sí! ❤️</button>
+                    <button id="noBtn">No</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANTALLA 6: SAVING (LOADER FINAL CENTRADO) -->
+        <section id="saving" class="screen">
+            <div class="center">
+                <h2>Guardando nuestro momento...</h2>
+                <div class="savingBar">
+                    <div id="savingProgress"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANTALLA 7: CELEBRACIÓN Y CONTADOR -->
+        <section id="celebration" class="screen">
+            <canvas id="confetti"></canvas>
+            <div class="celebrationContent">
+                <h1>Juntos desde siempre ❤️</h1>
+                <p>Llevamos exactamente:</p>
+                
+                <div id="counter">
+                    <div class="timeBox"><span id="years">0</span><label>Años</label></div>
+                    <div class="timeBox"><span id="months">0</span><label>Meses</label></div>
+                    <div class="timeBox"><span id="days">0</span><label>Días</label></div>
+                    <div class="timeBox"><span id="hours">00</span><label>Horas</label></div>
+                    <div class="timeBox"><span id="minutes">00</span><label>Minutos</label></div>
+                    <div class="timeBox"><span id="seconds">00</span><label>Segundos</label></div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- EEFECTOS FLOTANTES -->
+    <div id="heartContainer"></div>
+    <div id="sparkleContainer"></div>
+
+    <script src="script.js"></script>
 </body>
-
 </html>
-
