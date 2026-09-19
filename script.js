@@ -6,25 +6,23 @@
 console.log("For Sofia loaded ❤️");
 
 /* =====================================================
-APP STATE & NAVIGATION
+APP STATE & NAVIGATION BY ID
 ===================================================== */
 
 const screens = document.querySelectorAll(".screen");
 
-let currentScreen = 0;
 let galleryInterval = null;
 let counterInterval = null;
 let confettiAnimationId = null;
 
-function showScreen(index) {
-    if (index < 0 || index >= screens.length) return;
-
+function showScreenById(screenId) {
     screens.forEach(screen => {
-        screen.classList.remove("active");
+        if (screen.id === screenId) {
+            screen.classList.add("active");
+        } else {
+            screen.classList.remove("active");
+        }
     });
-
-    screens[index].classList.add("active");
-    currentScreen = index;
 }
 
 /* =====================================================
@@ -58,12 +56,12 @@ const beginBtn = document.getElementById("beginBtn");
 
 if (beginBtn) {
     beginBtn.addEventListener("click", () => {
-        showScreen(1);
+        showScreenById("intro");
 
         setTimeout(() => {
-            showScreen(2);
+            showScreenById("gallery");
             startGallery();
-        }, 2800);
+        }, 3200);
     });
 }
 
@@ -114,7 +112,7 @@ if (continueGallery) {
         if (galleryInterval) {
             clearInterval(galleryInterval);
         }
-        showScreen(3);
+        showScreenById("letter");
         startLetter();
     });
 }
@@ -145,9 +143,7 @@ if (gallery) {
 LETTER
 ===================================================== */
 
-const letter = `Dear Sofia,
-
-Sometimes life surprises us.
+const letter = `Sometimes life surprises us.
 
 I never expected to meet someone who could make ordinary moments feel special.
 
@@ -156,12 +152,19 @@ every conversation,
 every hug,
 and every memory.
 
-You have made my life brighter.
-
-And there is only one thing left to ask...`;
+You have made my life brighter.`;
 
 let letterIndex = 0;
 let letterTimer = null;
+
+function goToTransition() {
+    showScreenById("transition");
+
+    // Espera 3.5 segundos en la pantalla "There is only one thing left to ask..." y pasa a la propuesta
+    setTimeout(() => {
+        showScreenById("proposal");
+    }, 3500);
+}
 
 function startLetter() {
     const target = document.getElementById("typedLetter");
@@ -184,7 +187,7 @@ function startLetter() {
             clearInterval(letterTimer);
             letterTimer = null;
             
-            // Forzar visualización del botón anulando cualquier CSS
+            // Forzar aparición del botón Continue en pantalla
             if (continueBtn) {
                 continueBtn.style.display = "block";
                 continueBtn.style.opacity = "1";
@@ -192,10 +195,11 @@ function startLetter() {
                 continueBtn.classList.add("visible");
             }
 
-            // Cambio automático tras 2.5 segundos como respaldo de seguridad
+            // Resguardo automático: Si en 2.5s no hace clic, avanza automáticamente
             setTimeout(() => {
-                if (currentScreen === 3) {
-                    showScreen(4);
+                const letterScreen = document.getElementById("letter");
+                if (letterScreen && letterScreen.classList.contains("active")) {
+                    goToTransition();
                 }
             }, 2500);
         }
@@ -206,8 +210,11 @@ const continueLetter = document.getElementById("continueLetter");
 
 if (continueLetter) {
     continueLetter.addEventListener("click", () => {
-        if (letterTimer) clearInterval(letterTimer);
-        showScreen(4);
+        if (letterTimer) {
+            clearInterval(letterTimer);
+            letterTimer = null;
+        }
+        goToTransition();
     });
 }
 
@@ -257,7 +264,8 @@ SAVE RELATIONSHIP
 function saveRelationship() {
     const now = Date.now();
     localStorage.setItem("relationshipDate", now);
-    showScreen(5);
+    
+    showScreenById("saving");
     startSaving();
 }
 
@@ -291,7 +299,7 @@ CELEBRATION
 ===================================================== */
 
 function showCelebration() {
-    showScreen(6);
+    showScreenById("celebration");
     launchConfetti();
     startCounter();
 }
@@ -379,7 +387,8 @@ function launchConfetti() {
 }
 
 function animateConfetti() {
-    if (!ctx || currentScreen !== 6) return;
+    const celebrationScreen = document.getElementById("celebration");
+    if (!ctx || !celebrationScreen || !celebrationScreen.classList.contains("active")) return;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -425,7 +434,8 @@ function createHeart() {
 }
 
 setInterval(() => {
-    if (currentScreen === 6) {
+    const celebrationScreen = document.getElementById("celebration");
+    if (celebrationScreen && celebrationScreen.classList.contains("active")) {
         createHeart();
     }
 }, 800);
@@ -452,7 +462,8 @@ function createSparkle() {
 }
 
 setInterval(() => {
-    if (currentScreen === 6) {
+    const celebrationScreen = document.getElementById("celebration");
+    if (celebrationScreen && celebrationScreen.classList.contains("active")) {
         createSparkle();
     }
 }, 350);
@@ -502,7 +513,8 @@ RESIZE HANDLER
 ===================================================== */
 
 window.addEventListener("resize", () => {
-    if (canvas && currentScreen === 6) {
+    const celebrationScreen = document.getElementById("celebration");
+    if (canvas && celebrationScreen && celebrationScreen.classList.contains("active")) {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     }
@@ -516,4 +528,3 @@ console.log(
     "%cFor Sofia ❤️",
     "font-size:22px;color:white;font-family:serif;"
 );
-
