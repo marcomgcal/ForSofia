@@ -6,7 +6,11 @@ let counterInterval = null;
 let galleryInterval = null;
 let activeGalleryIndex = 0;
 
-// English Letter Content (Con toque divertido)
+// FECHA INICIAL FIJA: Hace exactamente 7 horas y 20 minutos
+// (19 de septiembre de 2026, 16:06:14 UTC)
+const START_DATE_TIMESTAMP = new Date('2026-09-19T16:06:14Z').getTime();
+
+// English Letter Content
 const letterText = `From the very first day, I knew you were someone truly special.\nThank you for all the amazing moments we've shared, and for loving me even when I start acting weird!\n\nThis little application is a special place kept just for the two of us.`;
 
 /* =====================================================
@@ -106,9 +110,6 @@ function typeWriter() {
    SAVE DATE & SAVING ANIMATION
 ===================================================== */
 function saveRelationship() {
-    const nowIso = new Date().toISOString();
-    localStorage.setItem("relationshipDate", nowIso);
-
     showScreenById("saving");
     startSaving();
 }
@@ -140,18 +141,14 @@ function showCelebration() {
 }
 
 function startCounter() {
-    const savedDateStr = localStorage.getItem("relationshipDate") || new Date().toISOString();
-    const startTimestamp = new Date(savedDateStr).getTime();
-    if (isNaN(startTimestamp)) return;
-
-    updateCounter(startTimestamp);
+    updateCounter(START_DATE_TIMESTAMP);
 
     if (counterInterval) {
         clearInterval(counterInterval);
     }
 
     counterInterval = setInterval(() => {
-        updateCounter(startTimestamp);
+        updateCounter(START_DATE_TIMESTAMP);
     }, 1000);
 }
 
