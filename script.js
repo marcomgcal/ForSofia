@@ -6,15 +6,9 @@ let counterInterval = null;
 let galleryInterval = null;
 let activeGalleryIndex = 0;
 
-// 7 horas y 20 minutos en milisegundos: (7 * 3600 + 20 * 60) * 1000 = 26,400,000 ms
-const INITIAL_OFFSET_MS = 26400000;
-
-// OBTENER O FIJAR LA FECHA DE INICIO PERMANENTE:
-// Si no existe la clave 'us_start_time', guardamos (Hora Actual - 7h 20m)
-if (!localStorage.getItem('us_start_time')) {
-    const calculatedStart = Date.now() - INITIAL_OFFSET_MS;
-    localStorage.setItem('us_start_time', calculatedStart.toString());
-}
+// FECHA DE INICIO ABSOLUTA Y PERMANENTE
+// 7 horas y 20 minutos atrás desde este momento exacto
+const START_TIMESTAMP = Date.now() - ((7 * 3600 + 20 * 60) * 1000);
 
 // English Letter Content
 const letterText = `From the very first day, I knew you were someone truly special.\nThank you for all the amazing moments we've shared, and for loving me even when I start acting weird!\n\nThis little application is a special place kept just for the two of us.`;
@@ -116,12 +110,6 @@ function typeWriter() {
    SAVE DATE & SAVING ANIMATION
 ===================================================== */
 function saveRelationship() {
-    // Aseguramos que la fecha esté fijada
-    if (!localStorage.getItem('us_start_time')) {
-        const calculatedStart = Date.now() - INITIAL_OFFSET_MS;
-        localStorage.setItem('us_start_time', calculatedStart.toString());
-    }
-
     showScreenById("saving");
     startSaving();
 }
@@ -153,30 +141,21 @@ function showCelebration() {
 }
 
 function startCounter() {
-    let rawTime = localStorage.getItem('us_start_time');
-    if (!rawTime) {
-        rawTime = (Date.now() - INITIAL_OFFSET_MS).toString();
-        localStorage.setItem('us_start_time', rawTime);
-    }
-
-    const startTimestamp = parseInt(rawTime, 10);
-
-    // Renderizado inmediato
-    updateCounter(startTimestamp);
+    // Forzamos el renderizado inmediato con la hora guardada
+    updateCounter(START_TIMESTAMP);
 
     if (counterInterval) {
         clearInterval(counterInterval);
     }
 
-    // Actualización cada 1 segundo
+    // Actualiza cada 1 segundo en tiempo real
     counterInterval = setInterval(() => {
-        updateCounter(startTimestamp);
+        updateCounter(START_TIMESTAMP);
     }, 1000);
 }
 
 function updateCounter(startTimestamp) {
     const now = Date.now();
-    // Garantizamos que la diferencia siempre sea positiva
     const diff = Math.max(0, Math.floor((now - startTimestamp) / 1000));
 
     const years = Math.floor(diff / 31536000);
