@@ -6,11 +6,11 @@ let counterInterval = null;
 let galleryInterval = null;
 let activeGalleryIndex = 0;
 
-// FECHA Y HORA DE INICIO ABSOLUTA E INMUTABLE (ISO 8601 UTC)
-// Representa el instante exacto fijo en el tiempo (19 de Septiembre de 2026, 16:07 UTC)
+// FECHA Y HORA EXACTA DE INICIO EN UTC (INMUTABLE)
+// Representa el momento exacto guardado (19 Sep 2026, 16:07 UTC)
 const START_DATE_ISO = "2026-09-19T16:07:00Z";
 
-// Texto de la carta sin repeticiones de nombre
+// CARTA COMPLETAMENTE LIMPIA (0 VECES EL NOMBRE)
 const letterText = `From the very first day, I knew you were someone truly special.\nThank you for all the amazing moments we've shared, and for loving me even when I start acting weird!\n\nThis little application is a special place kept just for the two of us.`;
 
 /* =====================================================
@@ -156,7 +156,7 @@ function updateCounter() {
     const startMs = Date.parse(START_DATE_ISO);
     const nowMs = Date.now();
 
-    // Diferencia real en segundos contados en tiempo continuo
+    // Diferencia real en segundos continuos en tiempo real
     const diff = Math.max(0, Math.floor((nowMs - startMs) / 1000));
 
     const years = Math.floor(diff / 31536000);
