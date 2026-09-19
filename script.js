@@ -6,25 +6,11 @@ let counterInterval = null;
 let galleryInterval = null;
 let activeGalleryIndex = 0;
 
-// English Letter Content
-const letterText = `Dearest Sofia,\n\nFrom the very first day, I knew you were someone truly special.\nThank you for every laugh, every hug, and every moment we've shared.\n\nThis little application is a special place kept just for the two of us.`;
+// English Letter Content (Con toque divertido)
+const letterText = `From the very first day, I knew you were someone truly special.\nThank you for all the amazing moments we've shared, and for loving me even when I start acting weird!\n\nThis little application is a special place kept just for the two of us.`;
 
 /* =====================================================
-   SAFE IMAGE FALLBACK HANDLER
-===================================================== */
-function handleImgFallback(img, fallbacks) {
-    let currentIdx = parseInt(img.getAttribute('data-try') || '0', 10);
-    if (fallbacks && currentIdx < fallbacks.length) {
-        img.setAttribute('data-try', currentIdx + 1);
-        img.src = fallbacks[currentIdx];
-    } else {
-        // Stop trying to reload to prevent loop
-        img.onerror = null;
-    }
-}
-
-/* =====================================================
-   INITIALIZATION & SESSION RESTORATION
+   INITIALIZATION
 ===================================================== */
 window.addEventListener("load", () => {
     // Hide Loader
@@ -38,13 +24,7 @@ window.addEventListener("load", () => {
         }, 1800);
     }
 
-    // Check if relationship date is already saved
-    const savedDate = localStorage.getItem("relationshipDate");
-    if (savedDate) {
-        showCelebration();
-    } else {
-        createFloatingHearts();
-    }
+    createFloatingHearts();
 });
 
 /* =====================================================
@@ -77,7 +57,6 @@ function startGallerySlideshow() {
     const memories = document.querySelectorAll('.memory');
     if (memories.length === 0) return;
 
-    // Reset initial view
     memories.forEach((mem, idx) => {
         if (idx === 0) {
             mem.classList.add('visible');
@@ -161,9 +140,7 @@ function showCelebration() {
 }
 
 function startCounter() {
-    const savedDateStr = localStorage.getItem("relationshipDate");
-    if (!savedDateStr) return;
-
+    const savedDateStr = localStorage.getItem("relationshipDate") || new Date().toISOString();
     const startTimestamp = new Date(savedDateStr).getTime();
     if (isNaN(startTimestamp)) return;
 
