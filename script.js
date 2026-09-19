@@ -4,24 +4,21 @@
 let currentScreen = 'welcome';
 let counterInterval = null;
 let galleryInterval = null;
+let activeGalleryIndex = 0;
 
 // English Letter Content
 const letterText = `Dearest Sofia,\n\nFrom the very first day, I knew you were someone truly special.\nThank you for every laugh, every hug, and every moment we've shared.\n\nThis little application is a special place kept just for the two of us.`;
 
 /* =====================================================
-   IMAGE FALLBACK HANDLER
+   SAFE IMAGE FALLBACK HANDLER
 ===================================================== */
-function handleImageError(img, fallbacks) {
-    if (!img.dataset.tryIndex) {
-        img.dataset.tryIndex = "0";
-    }
-    
-    let index = parseInt(img.dataset.tryIndex, 10);
-    
-    if (fallbacks && index < fallbacks.length) {
-        img.dataset.tryIndex = index + 1;
-        img.src = fallbacks[index];
+function handleImgFallback(img, fallbacks) {
+    let currentIdx = parseInt(img.getAttribute('data-try') || '0', 10);
+    if (fallbacks && currentIdx < fallbacks.length) {
+        img.setAttribute('data-try', currentIdx + 1);
+        img.src = fallbacks[currentIdx];
     } else {
+        // Stop trying to reload to prevent loop
         img.onerror = null;
     }
 }
@@ -37,8 +34,8 @@ window.addEventListener("load", () => {
             loader.style.opacity = "0";
             setTimeout(() => {
                 loader.style.display = "none";
-            }, 1000);
-        }, 2400);
+            }, 800);
+        }, 1800);
     }
 
     // Check if relationship date is already saved
@@ -78,16 +75,26 @@ function nextScreen(screenId) {
 
 function startGallerySlideshow() {
     const memories = document.querySelectorAll('.memory');
-    if (memories.length <= 1) return;
+    if (memories.length === 0) return;
 
-    let currentIndex = 0;
+    // Reset initial view
+    memories.forEach((mem, idx) => {
+        if (idx === 0) {
+            mem.classList.add('visible');
+        } else {
+            mem.classList.remove('visible');
+        }
+    });
+
+    activeGalleryIndex = 0;
+
     if (galleryInterval) clearInterval(galleryInterval);
 
     galleryInterval = setInterval(() => {
-        memories[currentIndex].classList.remove('visible');
-        currentIndex = (currentIndex + 1) % memories.length;
-        memories[currentIndex].classList.add('visible');
-    }, 4000);
+        memories[activeGalleryIndex].classList.remove('visible');
+        activeGalleryIndex = (activeGalleryIndex + 1) % memories.length;
+        memories[activeGalleryIndex].classList.add('visible');
+    }, 3500);
 }
 
 /* =====================================================
@@ -230,4 +237,3 @@ function createFloatingHearts() {
         }, 8000);
     }, 1200);
 }
-
