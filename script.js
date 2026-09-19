@@ -6,9 +6,9 @@ let counterInterval = null;
 let galleryInterval = null;
 let activeGalleryIndex = 0;
 
-// TIMESTAMP FIJO ABSOLUTO:
-// Corresponde a la hora exacta de inicio fija (hace 7h 20m)
-const START_DATE_TIMESTAMP = Date.now() - ((7 * 60 * 60 * 1000) + (20 * 60 * 1000));
+// FECHA DE INICIO ABSOLUTA Y FIJA: 19 de Septiembre de 2026, 16:07:00
+// (Equivale exactamente a 7 horas y 20 minutos antes de las 23:27)
+const FIXED_START_TIMESTAMP = 1789834020000;
 
 // English Letter Content
 const letterText = `From the very first day, I knew you were someone truly special.\nThank you for all the amazing moments we've shared, and for loving me even when I start acting weird!\n\nThis little application is a special place kept just for the two of us.`;
@@ -17,9 +17,8 @@ const letterText = `From the very first day, I knew you were someone truly speci
    INITIALIZATION
 ===================================================== */
 window.addEventListener("load", () => {
-    // Limpiamos cualquier rastro antiguo en la memoria del navegador por seguridad
-    localStorage.removeItem("relationshipStartTime");
-    localStorage.removeItem("relationshipDate");
+    // Borramos memorias antiguas por si acaso
+    localStorage.clear();
 
     // Hide Loader
     const loader = document.getElementById("loader");
@@ -145,21 +144,21 @@ function showCelebration() {
 }
 
 function startCounter() {
-    // Actualización inmediata
-    updateCounter(START_DATE_TIMESTAMP);
+    // Primera actualización inmediata
+    updateCounter(FIXED_START_TIMESTAMP);
 
     if (counterInterval) {
         clearInterval(counterInterval);
     }
 
-    // Intervalo de 1 segundo
+    // Actualizar cada 1 segundo en tiempo real
     counterInterval = setInterval(() => {
-        updateCounter(START_DATE_TIMESTAMP);
+        updateCounter(FIXED_START_TIMESTAMP);
     }, 1000);
 }
 
 function updateCounter(startTimestamp) {
-    // Calcula la diferencia en segundos desde la fecha base
+    // Restamos la hora actual del teléfono a la marca fija del pasado
     const diff = Math.max(0, Math.floor((Date.now() - startTimestamp) / 1000));
 
     const years = Math.floor(diff / 31536000);
