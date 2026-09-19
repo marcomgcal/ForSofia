@@ -60,10 +60,6 @@ Preparing something special...
 
 <main id="app">
 
-<!-- ===================================================== -->
-<!-- WELCOME -->
-<!-- ===================================================== -->
-
 <section
 id="welcome"
 class="screen active">
@@ -106,10 +102,6 @@ Begin ❤️
 
 </section>
 
-<!-- ===================================================== -->
-<!-- INTRO -->
-<!-- ===================================================== -->
-
 <section
 id="intro"
 class="screen">
@@ -140,10 +132,6 @@ any noise.
 
 </section>
 
-<!-- ===================================================== -->
-<!-- GALLERY -->
-<!-- ===================================================== -->
-
 <section
 id="gallery"
 class="screen">
@@ -151,7 +139,7 @@ class="screen">
 <article class="memory visible">
 
 <img
-src="images/photo1.jpg"
+src="3E532DB9-1744-4FA3-B695-7530707F9E5F.jpeg"
 alt="Photo 1">
 
 <div class="overlay"></div>
@@ -181,7 +169,7 @@ you least expect them.
 <article class="memory">
 
 <img
-src="images/photo2.jpg"
+src="645BDD27-2ACF-427F-8FB8-E530815554EF.jpeg"
 alt="Photo 2">
 
 <div class="overlay"></div>
@@ -217,7 +205,7 @@ to end.
 <article class="memory">
 
 <img
-src="images/photo3.jpg"
+src="D96AAB3F-820E-4A5B-94A3-75F0CD6899A4.jpeg"
 alt="Photo 3">
 
 <div class="overlay"></div>
@@ -245,7 +233,7 @@ my favourite place.
 <article class="memory">
 
 <img
-src="images/photo4.jpg"
+src="041569D8-1E29-4ADB-8D2C-907D2EEA402F.png"
 alt="Photo 4">
 
 <div class="overlay"></div>
@@ -284,10 +272,6 @@ Continue ❤️
 
 </section>
 
-<!-- ===================================================== -->
-<!-- LETTER -->
-<!-- ===================================================== -->
-
 <section
 id="letter"
 class="screen">
@@ -300,9 +284,7 @@ Dear Sofia,
 
 </h2>
 
-<div id="typedLetter">
-
-</div>
+<div id="typedLetter"></div>
 
 <button
 id="continueLetter">
@@ -314,10 +296,6 @@ Continue
 </div>
 
 </section>
-
-<!-- ===================================================== -->
-<!-- TRANSITION -->
-<!-- ===================================================== -->
 
 <section
 id="transition"
@@ -338,10 +316,6 @@ left to ask...
 </div>
 
 </section>
-
-<!-- ===================================================== -->
-<!-- PROPOSAL -->
-<!-- ===================================================== -->
 
 <section
 id="proposal"
@@ -404,7 +378,6 @@ No 🤍
 </div>
 
 </section>
-
 <!-- ===================================================== -->
 <!-- SAVING -->
 <!-- ===================================================== -->
@@ -474,97 +447,49 @@ Together for
 
 <div class="timeBox">
 
-<span id="years">
+<span id="years">0</span>
 
-0
-
-</span>
-
-<label>
-
-Years
-
-</label>
+<label>Years</label>
 
 </div>
 
 <div class="timeBox">
 
-<span id="months">
+<span id="months">0</span>
 
-0
-
-</span>
-
-<label>
-
-Months
-
-</label>
+<label>Months</label>
 
 </div>
 
 <div class="timeBox">
 
-<span id="days">
+<span id="days">0</span>
 
-0
-
-</span>
-
-<label>
-
-Days
-
-</label>
+<label>Days</label>
 
 </div>
 
 <div class="timeBox">
 
-<span id="hours">
+<span id="hours">00</span>
 
-00
-
-</span>
-
-<label>
-
-Hours
-
-</label>
+<label>Hours</label>
 
 </div>
 
 <div class="timeBox">
 
-<span id="minutes">
+<span id="minutes">00</span>
 
-00
-
-</span>
-
-<label>
-
-Minutes
-
-</label>
+<label>Minutes</label>
 
 </div>
 
 <div class="timeBox">
 
-<span id="seconds">
+<span id="seconds">00</span>
 
-00
-
-</span>
-
-<label>
-
-Seconds
-
-</label>
+<label>Seconds</label>
 
 </div>
 
@@ -697,22 +622,22 @@ audio/music.mp3
 
 <link
 rel="preload"
-href="images/photo1.jpg"
+href="3E532DB9-1744-4FA3-B695-7530707F9E5F.jpeg"
 as="image">
 
 <link
 rel="preload"
-href="images/photo2.jpg"
+href="645BDD27-2ACF-427F-8FB8-E530815554EF.jpeg"
 as="image">
 
 <link
 rel="preload"
-href="images/photo3.jpg"
+href="D96AAB3F-820E-4A5B-94A3-75F0CD6899A4.jpeg"
 as="image">
 
 <link
 rel="preload"
-href="images/photo4.jpg"
+href="041569D8-1E29-4ADB-8D2C-907D2EEA402F.png"
 as="image">
 
 <!-- ===================================================== -->
@@ -720,29 +645,17 @@ as="image">
 <!-- ===================================================== -->
 
 <script
-src="script.js">
-
-</script>
+src="script.js"></script>
 
 <script>
 
 if("serviceWorker" in navigator){
 
-window.addEventListener(
+window.addEventListener("load",()=>{
 
-"load",
+navigator.serviceWorker.register("sw.js");
 
-()=>{
-
-navigator.serviceWorker.register(
-
-"sw.js"
-
-);
-
-}
-
-);
+});
 
 }
 
