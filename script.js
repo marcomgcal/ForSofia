@@ -5,82 +5,53 @@
 
 console.log("For Sofia loaded ❤️");
 
-/* ---------- APP ---------- */
-
-const app = document.getElementById("app");
-
-let currentScreen = 0;
-
-function showScreen(index){
-
-    const screens = document.querySelectorAll(".screen");
-
-    screens.forEach(screen=>{
-        screen.classList.remove("active");
-    });
-
-    if(screens[index]){
-
-        screens[index].classList.add("active");
-
-        currentScreen = index;
-
-    }
-
-}
-
-/* ---------- LOADER ---------- */
-
-window.addEventListener("load",()=>{
-
-    console.log("Application ready.");
-
-});
-
-/* ---------- BEGIN ---------- */
-
-document.addEventListener("click",(event)=>{
-
-    if(event.target.id==="beginBtn"){
-
-        showScreen(1);
-
-    }
-
-});
-
 /* =====================================================
-   FOR SOFIA
-   MAIN APP ENGINE
+APP
 ===================================================== */
 
 const screens=document.querySelectorAll(".screen");
 
 let currentScreen=0;
+let galleryInterval=null;
+let counterInterval=null;
 
 function showScreen(index){
 
-    screens.forEach(screen=>{
+if(index<0||index>=screens.length)return;
 
-        screen.classList.remove("active");
+screens.forEach(screen=>{
 
-    });
+screen.classList.remove("active");
 
-    screens[index].classList.add("active");
+});
 
-    currentScreen=index;
+screens[index].classList.add("active");
 
-}
-
-function nextScreen(){
-
-    if(currentScreen<screens.length-1){
-
-        showScreen(currentScreen+1);
-
-    }
+currentScreen=index;
 
 }
+
+/* =====================================================
+LOADER
+===================================================== */
+
+window.addEventListener("load",()=>{
+
+const loader=document.getElementById("loader");
+
+setTimeout(()=>{
+
+loader.style.opacity="0";
+
+setTimeout(()=>{
+
+loader.style.display="none";
+
+},1000);
+
+},2400);
+
+});
 
 /* =====================================================
 BEGIN
@@ -90,11 +61,7 @@ const beginBtn=document.getElementById("beginBtn");
 
 if(beginBtn){
 
-beginBtn.addEventListener(
-
-"click",
-
-()=>{
+beginBtn.addEventListener("click",()=>{
 
 showScreen(1);
 
@@ -106,9 +73,7 @@ startGallery();
 
 },2800);
 
-}
-
-);
+});
 
 }
 
@@ -124,6 +89,12 @@ function startGallery(){
 
 if(memories.length===0)return;
 
+if(galleryInterval){
+
+clearInterval(galleryInterval);
+
+}
+
 memories.forEach(memory=>{
 
 memory.classList.remove("visible");
@@ -132,15 +103,13 @@ memory.classList.remove("visible");
 
 currentMemory=0;
 
-memories[0].classList.add("visible");
+memories[currentMemory].classList.add("visible");
 
-galleryLoop();
+galleryInterval=setInterval(nextPhoto,5500);
 
 }
 
-function galleryLoop(){
-
-setInterval(()=>{
+function nextPhoto(){
 
 memories[currentMemory].classList.remove("visible");
 
@@ -154,27 +123,71 @@ currentMemory=0;
 
 memories[currentMemory].classList.add("visible");
 
-},5500);
-
 }
 
 const continueGallery=document.getElementById("continueGallery");
 
 if(continueGallery){
 
-continueGallery.addEventListener(
+continueGallery.addEventListener("click",()=>{
 
-"click",
+if(galleryInterval){
 
-()=>{
+clearInterval(galleryInterval);
+
+}
 
 showScreen(3);
 
 startLetter();
 
+});
+
 }
 
-);
+/* =====================================================
+SWIPE GALLERY
+===================================================== */
+
+let touchStartX=0;
+
+const gallery=document.getElementById("gallery");
+
+if(gallery){
+
+gallery.addEventListener("touchstart",event=>{
+
+touchStartX=event.touches[0].clientX;
+
+});
+
+gallery.addEventListener("touchend",event=>{
+
+const endX=event.changedTouches[0].clientX;
+
+if(endX<touchStartX-60){
+
+nextPhoto();
+
+}
+
+if(endX>touchStartX+60){
+
+memories[currentMemory].classList.remove("visible");
+
+currentMemory--;
+
+if(currentMemory<0){
+
+currentMemory=memories.length-1;
+
+}
+
+memories[currentMemory].classList.add("visible");
+
+}
+
+});
 
 }
 
@@ -200,6 +213,7 @@ And there is only one thing left to ask...
 `;
 
 let letterIndex=0;
+let letterTimer=null;
 
 function startLetter(){
 
@@ -211,7 +225,13 @@ target.innerHTML="";
 
 letterIndex=0;
 
-const timer=setInterval(()=>{
+if(letterTimer){
+
+clearInterval(letterTimer);
+
+}
+
+letterTimer=setInterval(()=>{
 
 target.innerHTML+=letter.charAt(letterIndex);
 
@@ -219,7 +239,7 @@ letterIndex++;
 
 if(letterIndex>=letter.length){
 
-clearInterval(timer);
+clearInterval(letterTimer);
 
 }
 
@@ -231,17 +251,11 @@ const continueLetter=document.getElementById("continueLetter");
 
 if(continueLetter){
 
-continueLetter.addEventListener(
-
-"click",
-
-()=>{
+continueLetter.addEventListener("click",()=>{
 
 showScreen(4);
 
-}
-
-);
+});
 
 }
 
@@ -252,26 +266,32 @@ PROPOSAL
 const yesBtn=document.getElementById("yesBtn");
 const noBtn=document.getElementById("noBtn");
 
-if(noBtn){
-
-noBtn.addEventListener("mouseenter",moveNoButton);
-noBtn.addEventListener("touchstart",moveNoButton);
-
-}
-
 function moveNoButton(){
 
 const proposal=document.querySelector(".proposalCard");
 
-const maxX=proposal.clientWidth-180;
-const maxY=proposal.clientHeight-80;
+if(!proposal)return;
 
-const x=Math.random()*maxX;
-const y=Math.random()*maxY;
+const maxX=Math.max(0,proposal.clientWidth-180);
+const maxY=Math.max(0,proposal.clientHeight-90);
 
 noBtn.style.position="absolute";
-noBtn.style.left=x+"px";
-noBtn.style.top=y+"px";
+noBtn.style.left=Math.random()*maxX+"px";
+noBtn.style.top=Math.random()*maxY+"px";
+
+}
+
+if(noBtn){
+
+noBtn.addEventListener("mouseenter",moveNoButton);
+
+noBtn.addEventListener("touchstart",(event)=>{
+
+event.preventDefault();
+
+moveNoButton();
+
+},{passive:false});
 
 }
 
@@ -292,20 +312,14 @@ saveRelationship();
 }
 
 /* =====================================================
-SAVE DATE
+SAVE RELATIONSHIP
 ===================================================== */
 
 function saveRelationship(){
 
-const now=new Date().getTime();
+const now=Date.now();
 
-localStorage.setItem(
-
-"relationshipDate",
-
-now
-
-);
+localStorage.setItem("relationshipDate",now);
 
 showScreen(5);
 
@@ -314,7 +328,7 @@ startSaving();
 }
 
 /* =====================================================
-SAVING BAR
+SAVING
 ===================================================== */
 
 function startSaving(){
@@ -322,6 +336,8 @@ function startSaving(){
 const bar=document.getElementById("savingProgress");
 
 let progress=0;
+
+bar.style.width="0%";
 
 const timer=setInterval(()=>{
 
@@ -361,19 +377,19 @@ COUNTER
 
 function startCounter(){
 
-const saved=Number(
+const saved=Number(localStorage.getItem("relationshipDate"));
 
-localStorage.getItem(
-
-"relationshipDate"
-
-)
-
-);
+if(!saved)return;
 
 updateCounter(saved);
 
-setInterval(()=>{
+if(counterInterval){
+
+clearInterval(counterInterval);
+
+}
+
+counterInterval=setInterval(()=>{
 
 updateCounter(saved);
 
@@ -383,37 +399,17 @@ updateCounter(saved);
 
 function updateCounter(start){
 
-const diff=Math.floor(
-
-(Date.now()-start)/1000
-
-);
+const diff=Math.floor((Date.now()-start)/1000);
 
 const years=Math.floor(diff/31536000);
 
-const months=Math.floor(
+const months=Math.floor((diff%31536000)/2592000);
 
-(diff%31536000)/2592000
+const days=Math.floor((diff%2592000)/86400);
 
-);
+const hours=Math.floor((diff%86400)/3600);
 
-const days=Math.floor(
-
-(diff%2592000)/86400
-
-);
-
-const hours=Math.floor(
-
-(diff%86400)/3600
-
-);
-
-const minutes=Math.floor(
-
-(diff%3600)/60
-
-);
+const minutes=Math.floor((diff%3600)/60);
 
 const seconds=diff%60;
 
@@ -421,14 +417,9 @@ document.getElementById("years").textContent=years;
 document.getElementById("months").textContent=months;
 document.getElementById("days").textContent=days;
 
-document.getElementById("hours").textContent=
-String(hours).padStart(2,"0");
-
-document.getElementById("minutes").textContent=
-String(minutes).padStart(2,"0");
-
-document.getElementById("seconds").textContent=
-String(seconds).padStart(2,"0");
+document.getElementById("hours").textContent=String(hours).padStart(2,"0");
+document.getElementById("minutes").textContent=String(minutes).padStart(2,"0");
+document.getElementById("seconds").textContent=String(seconds).padStart(2,"0");
 
 }
 
@@ -437,33 +428,38 @@ CONFETTI
 ===================================================== */
 
 const canvas=document.getElementById("confetti");
+const ctx=canvas?canvas.getContext("2d"):null;
 
-const ctx=canvas.getContext("2d");
+if(canvas){
 
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
+}
+
 const pieces=[];
+
+if(canvas){
 
 for(let i=0;i<180;i++){
 
 pieces.push({
 
 x:Math.random()*canvas.width,
-
 y:-Math.random()*canvas.height,
-
 r:2+Math.random()*5,
-
 vx:(Math.random()-.5)*3,
-
 vy:2+Math.random()*4
 
 });
 
 }
 
+}
+
 function launchConfetti(){
+
+if(!ctx)return;
 
 animateConfetti();
 
@@ -471,35 +467,15 @@ animateConfetti();
 
 function animateConfetti(){
 
-ctx.clearRect(
+if(!ctx)return;
 
-0,
-
-0,
-
-canvas.width,
-
-canvas.height
-
-);
+ctx.clearRect(0,0,canvas.width,canvas.height);
 
 pieces.forEach(p=>{
 
 ctx.beginPath();
 
-ctx.arc(
-
-p.x,
-
-p.y,
-
-p.r,
-
-0,
-
-Math.PI*2
-
-);
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
 
 ctx.fillStyle="white";
 
@@ -511,16 +487,13 @@ p.y+=p.vy;
 if(p.y>canvas.height){
 
 p.y=-20;
+p.x=Math.random()*canvas.width;
 
 }
 
 });
 
-requestAnimationFrame(
-
-animateConfetti
-
-);
+requestAnimationFrame(animateConfetti);
 
 }
 
@@ -530,13 +503,7 @@ RESTORE SESSION
 
 window.addEventListener("load",()=>{
 
-const saved=
-
-localStorage.getItem(
-
-"relationshipDate"
-
-);
+const saved=localStorage.getItem("relationshipDate");
 
 if(saved){
 
@@ -547,10 +514,8 @@ showCelebration();
 });
 
 /* =====================================================
-PREMIUM EFFECTS
+FLOATING HEARTS
 ===================================================== */
-
-/* ---------- Floating Hearts ---------- */
 
 const heartContainer=document.getElementById("heartContainer");
 
@@ -562,7 +527,7 @@ const heart=document.createElement("div");
 
 heart.className="floatingHeart";
 
-heart.innerHTML="❤";
+heart.textContent="❤";
 
 heart.style.left=Math.random()*100+"vw";
 
@@ -590,7 +555,9 @@ createHeart();
 
 },800);
 
-/* ---------- Shooting Stars ---------- */
+/* =====================================================
+SHOOTING STARS
+===================================================== */
 
 const shootingStars=document.getElementById("shootingStars");
 
@@ -616,11 +583,13 @@ meteor.remove();
 
 setInterval(createMeteor,9000);
 
-/* ---------- Sparkles ---------- */
+/* =====================================================
+SPARKLES
+===================================================== */
 
 const sparkleContainer=document.getElementById("sparkleContainer");
 
-function sparkle(){
+function createSparkle(){
 
 if(!sparkleContainer)return;
 
@@ -646,71 +615,19 @@ setInterval(()=>{
 
 if(currentScreen===6){
 
-sparkle();
+createSparkle();
 
 }
 
 },350);
 
 /* =====================================================
-SWIPE GALLERY
+INSTALL
 ===================================================== */
 
-let touchStartX=0;
+let deferredPrompt=null;
 
-const gallery=document.getElementById("gallery");
-
-if(gallery){
-
-gallery.addEventListener("touchstart",(e)=>{
-
-touchStartX=e.touches[0].clientX;
-
-});
-
-gallery.addEventListener("touchend",(e)=>{
-
-const end=e.changedTouches[0].clientX;
-
-if(end<touchStartX-60){
-
-nextPhoto();
-
-}
-
-});
-
-}
-
-function nextPhoto(){
-
-if(memories.length===0)return;
-
-memories[currentMemory].classList.remove("visible");
-
-currentMemory++;
-
-if(currentMemory>=memories.length){
-
-currentMemory=0;
-
-}
-
-memories[currentMemory].classList.add("visible");
-
-}
-
-/* =====================================================
-INSTALL PROMPT
-===================================================== */
-
-let deferredPrompt;
-
-window.addEventListener(
-
-"beforeinstallprompt",
-
-(event)=>{
+window.addEventListener("beforeinstallprompt",(event)=>{
 
 event.preventDefault();
 
@@ -724,9 +641,7 @@ card.classList.remove("installHidden");
 
 }
 
-}
-
-);
+});
 
 const installButton=document.getElementById("installButton");
 
@@ -741,6 +656,8 @@ deferredPrompt.prompt();
 await deferredPrompt.userChoice;
 
 deferredPrompt=null;
+
+document.getElementById("installCard").classList.add("installHidden");
 
 });
 
@@ -759,10 +676,12 @@ document.getElementById("installCard").classList.add("installHidden");
 }
 
 /* =====================================================
-WINDOW RESIZE
+WINDOW
 ===================================================== */
 
 window.addEventListener("resize",()=>{
+
+if(!canvas)return;
 
 canvas.width=window.innerWidth;
 
