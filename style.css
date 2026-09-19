@@ -1,10 +1,9 @@
 /* =======================================================
    FOR SOFIA
-   CINEMATIC EXPERIENCE
+   CINEMATIC EXPERIENCE (FIXED & RESPONSIVE)
 ======================================================= */
 
 :root{
-
     --bg:#000000;
     --text:#ffffff;
     --soft:#d9d9d9;
@@ -14,45 +13,30 @@
     --font-body:"Inter",sans-serif;
 
     --radius:24px;
-
     --transition:.6s cubic-bezier(.22,.61,.36,1);
-
 }
 
 *{
-
     margin:0;
     padding:0;
     box-sizing:border-box;
-
     -webkit-tap-highlight-color:transparent;
-
 }
 
 html{
-
     width:100%;
     height:100%;
-
     background:#000;
-
     scroll-behavior:smooth;
-
 }
 
 body{
-
     width:100%;
     height:100%;
-
     overflow:hidden;
-
     background:var(--bg);
-
     color:var(--text);
-
     font-family:var(--font-body);
-
 }
 
 /* =======================================================
@@ -60,59 +44,36 @@ CENTER
 ======================================================= */
 
 .center{
-
-display:flex;
-
-flex-direction:column;
-
-justify-content:center;
-
-align-items:center;
-
-text-align:center;
-
-width:100%;
-
-height:100%;
-
-padding:40px;
-
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    width:100%;
+    height:100%;
+    padding:20px;
 }
 
 button{
-
     border:none;
-
     outline:none;
-
     cursor:pointer;
-
     font-family:inherit;
-
 }
 
 img{
-
     display:block;
-
     width:100%;
-
     height:100%;
-
     object-fit:cover;
-
 }
 
 #app{
-
     width:100vw;
-
     height:100vh;
-
+    height:100dvh; /* Soporte para navegadores móviles modernos */
     position:relative;
-
     overflow:hidden;
-
 }
 
 /* ==========================================
@@ -120,37 +81,23 @@ SCREENS
 ========================================== */
 
 .screen{
-
     position:absolute;
-
     inset:0;
-
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
     flex-direction:column;
-
     opacity:0;
-
     visibility:hidden;
-
-    transition:
-    opacity .9s ease,
-    visibility .9s ease;
-
+    transition: opacity .9s ease, visibility .9s ease;
     background:#000;
-
+    padding:20px;
+    overflow-y:auto; /* Permite scroll interno si el contenido supera la pantalla */
 }
 
 .screen.active{
-
     opacity:1;
-
     visibility:visible;
-
 }
 
 /* ==========================================
@@ -158,73 +105,44 @@ WELCOME
 ========================================== */
 
 #welcome{
-
     text-align:center;
-
-    padding:40px;
-
+    padding:20px;
 }
 
 .eyebrow{
-
     font-size:14px;
-
     color:#9b9b9b;
-
     letter-spacing:3px;
-
     text-transform:uppercase;
-
-    margin-bottom:40px;
-
+    margin-bottom:20px;
 }
 
 #welcome h1{
-
     font-family:var(--font-title);
-
-    font-size:64px;
-
+    font-size:clamp(36px, 8vw, 64px);
     font-weight:600;
-
-    margin-bottom:28px;
-
+    margin-bottom:20px;
 }
 
 .subtitle{
-
     max-width:700px;
-
-    line-height:1.9;
-
+    line-height:1.8;
     color:#dddddd;
-
-    font-size:20px;
-
-    margin-bottom:60px;
-
+    font-size:clamp(16px, 4vw, 20px);
+    margin-bottom:40px;
 }
 
 #beginBtn{
-
     background:white;
-
     color:black;
-
-    padding:18px 42px;
-
+    padding:16px 38px;
     border-radius:999px;
-
     font-size:18px;
-
     transition:.35s;
-
 }
 
 #beginBtn:active{
-
     transform:scale(.95);
-
 }
 
 /* ==========================================
@@ -232,23 +150,15 @@ INTRO
 ========================================== */
 
 .cinematic{
-
     text-align:center;
-
-    padding:40px;
-
+    padding:20px;
 }
 
 .line{
-
     font-family:var(--font-title);
-
-    font-size:54px;
-
-    margin:28px 0;
-
+    font-size:clamp(28px, 6vw, 54px);
+    margin:20px 0;
     opacity:0;
-
 }
 
 /* ==========================================
@@ -256,199 +166,128 @@ GALLERY
 ========================================== */
 
 #gallery{
-
     overflow:hidden;
-
+    padding:0;
 }
 
 .memory{
-
     position:absolute;
-
     inset:0;
-
     opacity:0;
-
     transition:1.2s;
-
     pointer-events:none;
-
 }
 
 .memory.visible{
-
     opacity:1;
-
     pointer-events:auto;
-
 }
 
 .memory img{
-
     width:100%;
-
     height:100%;
-
     object-fit:cover;
-
     animation:kenburns 18s ease-in-out infinite alternate;
-
 }
 
 .overlay{
-
     position:absolute;
-
     inset:0;
-
-    background:
-
-    linear-gradient(
-
-    rgba(0,0,0,.15),
-
-    rgba(0,0,0,.65)
-
-    );
-
+    background: linear-gradient(rgba(0,0,0,.15), rgba(0,0,0,.75));
 }
 
 .memoryText{
-
     position:absolute;
-
-    bottom:70px;
-
-    left:40px;
-
-    right:40px;
-
+    bottom:90px;
+    left:24px;
+    right:24px;
+    text-align:center;
 }
 
 .memoryText h2{
-
     font-family:var(--font-title);
-
-    font-size:54px;
-
-    margin-bottom:18px;
-
+    font-size:clamp(32px, 6vw, 54px);
+    margin-bottom:12px;
 }
 
 .memoryText p{
-
     max-width:420px;
-
-    line-height:1.8;
-
+    margin:0 auto;
+    line-height:1.6;
     color:#ececec;
-
+    font-size:clamp(14px, 3.5vw, 16px);
 }
 
 .primaryButton{
-
     position:absolute;
-
-    bottom:30px;
-
+    bottom:24px;
     left:50%;
-
     transform:translateX(-50%);
-
     background:white;
-
     color:black;
-
-    padding:16px 38px;
-
+    padding:14px 32px;
     border-radius:999px;
-
+    white-space:nowrap;
+    font-size:16px;
 }
 
 @keyframes kenburns{
-
-0%{
-
-transform:scale(1);
-
+    0%{ transform:scale(1); }
+    100%{ transform:scale(1.12); }
 }
 
-100%{
-
-transform:scale(1.12);
-
-}
-
-}
 /* =======================================================
-LETTER
+LETTER (AJUSTES RESPONSIVOS CRÍTICOS)
 ======================================================= */
 
 #letter{
-
-padding:40px;
-display:flex;
-justify-content:center;
-align-items:center;
-
+    padding:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 .letterCard{
-
-width:min(90%,700px);
-
-background:rgba(255,255,255,.05);
-
-backdrop-filter:blur(25px);
-
-border:1px solid rgba(255,255,255,.12);
-
-border-radius:28px;
-
-padding:50px;
-
-box-shadow:0 20px 80px rgba(0,0,0,.45);
-
+    width:min(100%, 700px);
+    max-height:85vh;
+    max-height:85dvh;
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:28px;
+    padding:clamp(24px, 5vw, 50px);
+    box-shadow:0 20px 80px rgba(0,0,0,.45);
+    display:flex;
+    flex-direction:column;
+    overflow-y:auto; /* Evita que la carta se desborde fuera de la pantalla */
 }
 
 .letterCard h2{
-
-font-family:var(--font-title);
-
-font-size:46px;
-
-margin-bottom:30px;
-
+    font-family:var(--font-title);
+    font-size:clamp(32px, 5vw, 46px);
+    margin-bottom:20px;
+    flex-shrink:0;
 }
 
 #typedLetter{
-
-min-height:260px;
-
-font-size:18px;
-
-line-height:1.9;
-
-color:#efefef;
-
-white-space:pre-line;
-
+    min-height:180px;
+    font-size:clamp(15px, 3.8vw, 18px);
+    line-height:1.8;
+    color:#efefef;
+    white-space:pre-line;
+    word-break:break-word;
 }
 
 #continueLetter{
-
-margin-top:40px;
-
-padding:16px 40px;
-
-border-radius:999px;
-
-background:white;
-
-color:black;
-
-font-size:17px;
-
+    margin-top:24px;
+    padding:14px 36px;
+    border-radius:999px;
+    background:white;
+    color:black;
+    font-size:16px;
+    align-self:center;
+    flex-shrink:0;
 }
 
 /* =======================================================
@@ -456,124 +295,77 @@ PROPOSAL
 ======================================================= */
 
 #proposal{
-
-padding:30px;
-
+    padding:20px;
 }
 
 .proposalCard{
-
-width:min(92%,720px);
-
-text-align:center;
-
-background:rgba(255,255,255,.04);
-
-backdrop-filter:blur(20px);
-
-border-radius:30px;
-
-padding:60px 45px;
-
-border:1px solid rgba(255,255,255,.1);
-
+    width:min(100%, 720px);
+    max-height:90vh;
+    overflow-y:auto;
+    text-align:center;
+    background:rgba(255,255,255,.04);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border-radius:30px;
+    padding:clamp(30px, 6vw, 60px) clamp(20px, 5vw, 45px);
+    border:1px solid rgba(255,255,255,.1);
 }
 
 .small{
-
-letter-spacing:4px;
-
-text-transform:uppercase;
-
-font-size:13px;
-
-opacity:.7;
-
-margin-bottom:20px;
-
+    letter-spacing:3px;
+    text-transform:uppercase;
+    font-size:12px;
+    opacity:.7;
+    margin-bottom:16px;
 }
 
 .proposalCard h1{
-
-font-family:var(--font-title);
-
-font-size:56px;
-
-font-weight:600;
-
-margin-bottom:18px;
-
+    font-family:var(--font-title);
+    font-size:clamp(34px, 7vw, 56px);
+    font-weight:600;
+    margin-bottom:14px;
 }
 
 .proposalCard h2{
-
-font-size:30px;
-
-font-weight:400;
-
-margin-bottom:35px;
-
+    font-size:clamp(20px, 4vw, 30px);
+    font-weight:400;
+    margin-bottom:24px;
 }
 
 .proposalCard p{
-
-font-size:18px;
-
-line-height:1.8;
-
-color:#ddd;
-
-margin-bottom:45px;
-
+    font-size:clamp(15px, 3.5vw, 18px);
+    line-height:1.7;
+    color:#ddd;
+    margin-bottom:32px;
 }
 
 .buttons{
-
-display:flex;
-
-justify-content:center;
-
-gap:20px;
-
-flex-wrap:wrap;
-
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;
 }
 
-#yesBtn,
-#noBtn{
-
-padding:18px 42px;
-
-border-radius:999px;
-
-font-size:18px;
-
-transition:.35s;
-
+#yesBtn, #noBtn{
+    padding:16px 36px;
+    border-radius:999px;
+    font-size:16px;
+    transition:.35s;
 }
 
 #yesBtn{
-
-background:white;
-
-color:black;
-
+    background:white;
+    color:black;
 }
 
 #yesBtn:active{
-
-transform:scale(.95);
-
+    transform:scale(.95);
 }
 
 #noBtn{
-
-background:transparent;
-
-border:1px solid rgba(255,255,255,.3);
-
-color:white;
-
+    background:transparent;
+    border:1px solid rgba(255,255,255,.3);
+    color:white;
 }
 
 /* =======================================================
@@ -581,51 +373,31 @@ SAVING
 ======================================================= */
 
 #saving h2{
-
-font-family:var(--font-title);
-
-font-size:56px;
-
-text-align:center;
-
-margin-bottom:20px;
-
+    font-family:var(--font-title);
+    font-size:clamp(36px, 7vw, 56px);
+    text-align:center;
+    margin-bottom:16px;
 }
 
 #saving p{
-
-color:#d8d8d8;
-
-margin-bottom:45px;
-
-font-size:18px;
-
+    color:#d8d8d8;
+    margin-bottom:32px;
+    font-size:clamp(15px, 3.5vw, 18px);
 }
 
 .savingBar{
-
-width:min(80%,500px);
-
-height:8px;
-
-background:#1d1d1d;
-
-border-radius:999px;
-
-overflow:hidden;
-
+    width:min(90%, 500px);
+    height:8px;
+    background:#1d1d1d;
+    border-radius:999px;
+    overflow:hidden;
 }
 
 #savingProgress{
-
-width:0%;
-
-height:100%;
-
-background:white;
-
-transition:.3s;
-
+    width:0%;
+    height:100%;
+    background:white;
+    transition:.3s;
 }
 
 /* =======================================================
@@ -633,71 +405,44 @@ COUNTER
 ======================================================= */
 
 #celebration{
-
-padding:30px;
-
-text-align:center;
-
+    padding:20px;
+    text-align:center;
 }
 
 .celebrationContent h1{
-
-font-family:var(--font-title);
-
-font-size:70px;
-
-margin-bottom:18px;
-
+    font-family:var(--font-title);
+    font-size:clamp(40px, 8vw, 70px);
+    margin-bottom:16px;
 }
 
 #counter{
-
-display:grid;
-
-grid-template-columns:repeat(3,1fr);
-
-gap:20px;
-
-margin:50px auto;
-
-max-width:700px;
-
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(100px, 1fr));
+    gap:14px;
+    margin:30px auto;
+    width:100%;
+    max-width:700px;
 }
 
 .timeBox{
-
-background:rgba(255,255,255,.05);
-
-border:1px solid rgba(255,255,255,.08);
-
-border-radius:22px;
-
-padding:22px;
-
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
+    padding:16px 10px;
 }
 
 .timeBox span{
-
-display:block;
-
-font-size:40px;
-
-font-weight:700;
-
-margin-bottom:8px;
-
+    display:block;
+    font-size:clamp(24px, 5vw, 40px);
+    font-weight:700;
+    margin-bottom:6px;
 }
 
 .timeBox label{
-
-font-size:14px;
-
-opacity:.7;
-
-letter-spacing:2px;
-
-text-transform:uppercase;
-
+    font-size:12px;
+    opacity:.7;
+    letter-spacing:1px;
+    text-transform:uppercase;
 }
 
 /* =======================================================
@@ -705,99 +450,20 @@ FINAL
 ======================================================= */
 
 #finalScene{
-
-text-align:center;
-
+    text-align:center;
+    padding:20px;
 }
 
 .finalContent h1{
-
-font-family:var(--font-title);
-
-font-size:72px;
-
-margin-bottom:25px;
-
+    font-family:var(--font-title);
+    font-size:clamp(42px, 8vw, 72px);
+    margin-bottom:20px;
 }
 
 .signature{
-
-margin-top:35px;
-
-font-size:24px;
-
-letter-spacing:3px;
-
-}
-
-/* =======================================================
-IPHONE
-======================================================= */
-
-@media(max-width:768px){
-
-#welcome h1{
-
-font-size:48px;
-
-}
-
-.subtitle{
-
-font-size:18px;
-
-}
-
-.memoryText{
-
-left:24px;
-right:24px;
-bottom:50px;
-
-}
-
-.memoryText h2{
-
-font-size:42px;
-
-}
-
-.proposalCard{
-
-padding:40px 28px;
-
-}
-
-.proposalCard h1{
-
-font-size:42px;
-
-}
-
-.proposalCard h2{
-
-font-size:24px;
-
-}
-
-#counter{
-
-grid-template-columns:repeat(2,1fr);
-
-}
-
-.timeBox span{
-
-font-size:32px;
-
-}
-
-.finalContent h1{
-
-font-size:50px;
-
-}
-
+    margin-top:28px;
+    font-size:clamp(18px, 4vw, 24px);
+    letter-spacing:2px;
 }
 
 /* =======================================================
@@ -805,286 +471,145 @@ LOADER
 ======================================================= */
 
 #loader{
-
-position:fixed;
-
-inset:0;
-
-background:#000;
-
-display:flex;
-
-flex-direction:column;
-
-justify-content:center;
-
-align-items:center;
-
-z-index:99999;
-
-transition:opacity 1s ease;
-
+    position:fixed;
+    inset:0;
+    background:#000;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+    transition:opacity 1s ease;
+    padding:20px;
 }
 
 #loader h1{
-
-font-family:var(--font-title);
-
-font-size:54px;
-
-margin-bottom:18px;
-
+    font-family:var(--font-title);
+    font-size:clamp(36px, 7vw, 54px);
+    margin-bottom:16px;
 }
 
 #loader p{
-
-color:#aaa;
-
-margin-bottom:35px;
-
+    color:#aaa;
+    margin-bottom:28px;
 }
 
 .loaderBar{
-
-width:260px;
-
-height:6px;
-
-background:#202020;
-
-border-radius:999px;
-
-overflow:hidden;
-
+    width:min(80%, 260px);
+    height:6px;
+    background:#202020;
+    border-radius:999px;
+    overflow:hidden;
 }
 
 .loaderProgress{
-
-height:100%;
-
-width:0%;
-
-background:#fff;
-
-animation:loading 2.4s forwards;
-
+    height:100%;
+    width:0%;
+    background:#fff;
+    animation:loading 2.4s forwards;
 }
 
 @keyframes loading{
-
-0%{width:0%;}
-
-100%{width:100%;}
-
+    0%{width:0%;}
+    100%{width:100%;}
 }
 
 /* =======================================================
-STARS
+BACKGROUND EFFECTS
 ======================================================= */
 
 #starsLayer{
-
-position:fixed;
-
-inset:0;
-
-pointer-events:none;
-
-z-index:1;
-
-background-image:
-radial-gradient(circle,#ffffff 1px,transparent 1px),
-radial-gradient(circle,#ffffff 1px,transparent 1px),
-radial-gradient(circle,#ffffff 1px,transparent 1px);
-
-background-size:
-180px 180px,
-260px 260px,
-340px 340px;
-
-opacity:.35;
-
-animation:starsMove 120s linear infinite;
-
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:1;
+    background-image:
+        radial-gradient(circle,#ffffff 1px,transparent 1px),
+        radial-gradient(circle,#ffffff 1px,transparent 1px),
+        radial-gradient(circle,#ffffff 1px,transparent 1px);
+    background-size: 180px 180px, 260px 260px, 340px 340px;
+    opacity:.35;
+    animation:starsMove 120s linear infinite;
 }
 
 @keyframes starsMove{
-
-from{transform:translateY(0);}
-to{transform:translateY(-300px);}
-
+    from{transform:translateY(0);}
+    to{transform:translateY(-300px);}
 }
 
-/* =======================================================
-SHOOTING STARS
-======================================================= */
-
 #shootingStars{
-
-position:fixed;
-
-inset:0;
-
-overflow:hidden;
-
-pointer-events:none;
-
-z-index:2;
-
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:2;
 }
 
 .meteor{
-
-position:absolute;
-
-left:-150px;
-
-width:180px;
-
-height:2px;
-
-background:linear-gradient(90deg,white,transparent);
-
-transform:rotate(-25deg);
-
-animation:meteor 2s linear forwards;
-
+    position:absolute;
+    left:-150px;
+    width:180px;
+    height:2px;
+    background:linear-gradient(90deg,white,transparent);
+    transform:rotate(-25deg);
+    animation:meteor 2s linear forwards;
 }
 
 @keyframes meteor{
-
-0%{
-
-transform:translateX(0) translateY(0) rotate(-25deg);
-
-opacity:1;
-
+    0%{ transform:translateX(0) translateY(0) rotate(-25deg); opacity:1; }
+    100%{ transform:translateX(180vw) translateY(60vh) rotate(-25deg); opacity:0; }
 }
-
-100%{
-
-transform:translateX(180vw) translateY(60vh) rotate(-25deg);
-
-opacity:0;
-
-}
-
-}
-
-/* =======================================================
-FLOATING HEARTS
-======================================================= */
 
 #heartContainer{
-
-position:fixed;
-
-inset:0;
-
-overflow:hidden;
-
-pointer-events:none;
-
-z-index:3;
-
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:3;
 }
 
 .floatingHeart{
-
-position:absolute;
-
-bottom:-60px;
-
-color:white;
-
-opacity:.9;
-
-animation:heartFloat linear forwards;
-
+    position:absolute;
+    bottom:-60px;
+    color:white;
+    opacity:.9;
+    animation:heartFloat linear forwards;
 }
 
 @keyframes heartFloat{
-
-0%{
-
-transform:translateY(0) scale(.7);
-
-opacity:0;
-
+    0%{ transform:translateY(0) scale(.7); opacity:0; }
+    20%{ opacity:1; }
+    100%{ transform:translateY(-120vh) scale(1.5); opacity:0; }
 }
-
-20%{
-
-opacity:1;
-
-}
-
-100%{
-
-transform:translateY(-120vh) scale(1.5);
-
-opacity:0;
-
-}
-
-}
-
-/* =======================================================
-SPARKLES
-======================================================= */
 
 #sparkleContainer{
-
-position:fixed;
-
-inset:0;
-
-pointer-events:none;
-
-overflow:hidden;
-
-z-index:4;
-
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:4;
 }
 
 .sparkle{
-
-position:absolute;
-
-width:6px;
-
-height:6px;
-
-border-radius:50%;
-
-background:white;
-
-animation:sparkle 3s ease forwards;
-
+    position:absolute;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:white;
+    animation:sparkle 3s ease forwards;
 }
 
 @keyframes sparkle{
-
-0%{opacity:0;transform:scale(.2);}
-40%{opacity:1;}
-100%{opacity:0;transform:scale(2);}
-
+    0%{opacity:0;transform:scale(.2);}
+    40%{opacity:1;}
+    100%{opacity:0;transform:scale(2);}
 }
 
-/* =======================================================
-CONFETTI
-======================================================= */
-
 #confetti{
-
-position:fixed;
-
-inset:0;
-
-pointer-events:none;
-
-z-index:20;
-
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:20;
 }
 
 /* =======================================================
@@ -1092,176 +617,83 @@ INSTALL CARD
 ======================================================= */
 
 #installCard{
-
-position:fixed;
-
-left:20px;
-
-right:20px;
-
-bottom:30px;
-
-background:rgba(20,20,20,.96);
-
-border:1px solid rgba(255,255,255,.08);
-
-border-radius:24px;
-
-padding:28px;
-
-backdrop-filter:blur(30px);
-
-z-index:1000;
-
-transition:.5s;
-
+    position:fixed;
+    left:20px;
+    right:20px;
+    bottom:20px;
+    max-width:500px;
+    margin:0 auto;
+    background:rgba(20,20,20,.96);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:24px;
+    padding:20px;
+    backdrop-filter:blur(30px);
+    -webkit-backdrop-filter:blur(30px);
+    z-index:1000;
+    transition:.5s;
 }
 
 .installHidden{
-
-opacity:0;
-
-visibility:hidden;
-
-transform:translateY(40px);
-
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(40px);
 }
 
 .installBox h2{
-
-font-family:var(--font-title);
-
-font-size:34px;
-
-margin-bottom:12px;
-
+    font-family:var(--font-title);
+    font-size:clamp(24px, 5vw, 34px);
+    margin-bottom:8px;
 }
 
 .installBox p{
-
-line-height:1.7;
-
-color:#ddd;
-
-margin-bottom:25px;
-
+    line-height:1.6;
+    color:#ddd;
+    margin-bottom:20px;
+    font-size:14px;
 }
 
 .installButtons{
-
-display:flex;
-
-gap:16px;
-
+    display:flex;
+    gap:12px;
 }
 
 .installButtons button{
-
-flex:1;
-
-padding:16px;
-
-border-radius:999px;
-
+    flex:1;
+    padding:14px;
+    border-radius:999px;
+    font-size:14px;
 }
 
-#installButton{
-
-background:white;
-
-color:black;
-
-}
-
-#laterButton{
-
-background:#1d1d1d;
-
-color:white;
-
-}
+#installButton{ background:white; color:black; }
+#laterButton{ background:#1d1d1d; color:white; }
 
 /* =======================================================
-UTILITY
+UTILITY & ANIMATIONS
 ======================================================= */
 
-.hidden{
-
-display:none!important;
-
-}
+.hidden{ display:none!important; }
 
 .noSelect{
-
--webkit-user-select:none;
-user-select:none;
-
+    -webkit-user-select:none;
+    user-select:none;
 }
 
-/* =======================================================
-ANIMATIONS
-======================================================= */
-
-.fadeIn{
-
-animation:fadeIn 1.2s forwards;
-
-}
+.fadeIn{ animation:fadeIn 1.2s forwards; }
 
 @keyframes fadeIn{
-
-from{
-
-opacity:0;
-transform:translateY(20px);
-
+    from{ opacity:0; transform:translateY(20px); }
+    to{ opacity:1; transform:translateY(0); }
 }
 
-to{
-
-opacity:1;
-transform:translateY(0);
-
-}
-
-}
-
-.fadeOut{
-
-animation:fadeOut .8s forwards;
-
-}
+.fadeOut{ animation:fadeOut .8s forwards; }
 
 @keyframes fadeOut{
-
-to{
-
-opacity:0;
-
+    to{ opacity:0; }
 }
 
-}
-
-.scaleIn{
-
-animation:scaleIn .8s ease;
-
-}
+.scaleIn{ animation:scaleIn .8s ease; }
 
 @keyframes scaleIn{
-
-from{
-
-transform:scale(.9);
-opacity:0;
-
-}
-
-to{
-
-transform:scale(1);
-opacity:1;
-
-}
-
+    from{ transform:scale(.9); opacity:0; }
+    to{ transform:scale(1); opacity:1; }
 }
