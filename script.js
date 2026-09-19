@@ -160,7 +160,6 @@ let letterTimer = null;
 function goToTransition() {
     showScreenById("transition");
 
-    // Espera 3.5 segundos en la pantalla "There is only one thing left to ask..." y pasa a la propuesta
     setTimeout(() => {
         showScreenById("proposal");
     }, 3500);
@@ -187,7 +186,6 @@ function startLetter() {
             clearInterval(letterTimer);
             letterTimer = null;
             
-            // Forzar aparición del botón Continue en pantalla
             if (continueBtn) {
                 continueBtn.style.display = "block";
                 continueBtn.style.opacity = "1";
@@ -195,7 +193,6 @@ function startLetter() {
                 continueBtn.classList.add("visible");
             }
 
-            // Resguardo automático: Si en 2.5s no hace clic, avanza automáticamente
             setTimeout(() => {
                 const letterScreen = document.getElementById("letter");
                 if (letterScreen && letterScreen.classList.contains("active")) {
