@@ -8,7 +8,7 @@ let counterInterval = null;
 const letterText = `Dearest Sofia,\n\nFrom the very first day, I knew you were someone truly special.\nThank you for every laugh, every hug, and every moment we've shared.\n\nThis little application is a special place kept just for the two of us.`;
 
 /* =====================================================
-   INITIALIZATION & SESSION RESTORATION (PWA FIX)
+   INITIALIZATION & SESSION RESTORATION
 ===================================================== */
 window.addEventListener("load", () => {
     // Hide Loader
@@ -65,7 +65,6 @@ function typeWriter() {
     const btn = document.getElementById("continueLetter");
     let i = 0;
 
-    // Reset element content before typing
     if (el) el.textContent = "";
 
     function type() {
@@ -84,7 +83,6 @@ function typeWriter() {
    SAVE DATE & SAVING ANIMATION
 ===================================================== */
 function saveRelationship() {
-    // Save ISO date string for iOS compatibility
     const nowIso = new Date().toISOString();
     localStorage.setItem("relationshipDate", nowIso);
 
