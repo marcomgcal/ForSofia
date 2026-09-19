@@ -177,24 +177,27 @@ function startLetter() {
     }
 
     letterTimer = setInterval(() => {
-        target.textContent = letter.slice(0, letterIndex);
+        target.textContent = letter.substring(0, letterIndex);
         letterIndex++;
 
         if (letterIndex > letter.length) {
             clearInterval(letterTimer);
+            letterTimer = null;
             
-            // Muestra el botón si existe
+            // Forzar visualización del botón anulando cualquier CSS
             if (continueBtn) {
                 continueBtn.style.display = "block";
+                continueBtn.style.opacity = "1";
+                continueBtn.style.visibility = "visible";
                 continueBtn.classList.add("visible");
             }
 
-            // Transición automática tras 2 segundos de pausa al terminar de escribir
+            // Cambio automático tras 2.5 segundos como respaldo de seguridad
             setTimeout(() => {
                 if (currentScreen === 3) {
                     showScreen(4);
                 }
-            }, 2000);
+            }, 2500);
         }
     }, 35);
 }
