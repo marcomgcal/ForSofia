@@ -165,6 +165,8 @@ let letterTimer = null;
 
 function startLetter() {
     const target = document.getElementById("typedLetter");
+    const continueBtn = document.getElementById("continueLetter");
+    
     if (!target) return;
 
     target.textContent = "";
@@ -180,6 +182,19 @@ function startLetter() {
 
         if (letterIndex > letter.length) {
             clearInterval(letterTimer);
+            
+            // Muestra el botón si existe
+            if (continueBtn) {
+                continueBtn.style.display = "block";
+                continueBtn.classList.add("visible");
+            }
+
+            // Transición automática tras 2 segundos de pausa al terminar de escribir
+            setTimeout(() => {
+                if (currentScreen === 3) {
+                    showScreen(4);
+                }
+            }, 2000);
         }
     }, 35);
 }
@@ -188,6 +203,7 @@ const continueLetter = document.getElementById("continueLetter");
 
 if (continueLetter) {
     continueLetter.addEventListener("click", () => {
+        if (letterTimer) clearInterval(letterTimer);
         showScreen(4);
     });
 }
