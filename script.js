@@ -6,9 +6,15 @@ let counterInterval = null;
 let galleryInterval = null;
 let activeGalleryIndex = 0;
 
-// FECHA DE INICIO ABSOLUTA Y FIJA: 19 de Septiembre de 2026, 16:07:00
-// (Equivale exactamente a 7 horas y 20 minutos antes de las 23:27)
-const FIXED_START_TIMESTAMP = 1789834020000;
+// 7 horas y 20 minutos en milisegundos: (7 * 3600 + 20 * 60) * 1000 = 26,400,000 ms
+const INITIAL_OFFSET_MS = 26400000;
+
+// OBTENER O FIJAR LA FECHA DE INICIO PERMANENTE:
+// Si no existe la clave 'us_start_time', guardamos (Hora Actual - 7h 20m)
+if (!localStorage.getItem('us_start_time')) {
+    const calculatedStart = Date.now() - INITIAL_OFFSET_MS;
+    localStorage.setItem('us_start_time', calculatedStart.toString());
+}
 
 // English Letter Content
 const letterText = `From the very first day, I knew you were someone truly special.\nThank you for all the amazing moments we've shared, and for loving me even when I start acting weird!\n\nThis little application is a special place kept just for the two of us.`;
@@ -17,9 +23,6 @@ const letterText = `From the very first day, I knew you were someone truly speci
    INITIALIZATION
 ===================================================== */
 window.addEventListener("load", () => {
-    // Borramos memorias antiguas por si acaso
-    localStorage.clear();
-
     // Hide Loader
     const loader = document.getElementById("loader");
     if (loader) {
@@ -113,6 +116,12 @@ function typeWriter() {
    SAVE DATE & SAVING ANIMATION
 ===================================================== */
 function saveRelationship() {
+    // Aseguramos que la fecha esté fijada
+    if (!localStorage.getItem('us_start_time')) {
+        const calculatedStart = Date.now() - INITIAL_OFFSET_MS;
+        localStorage.setItem('us_start_time', calculatedStart.toString());
+    }
+
     showScreenById("saving");
     startSaving();
 }
@@ -144,22 +153,31 @@ function showCelebration() {
 }
 
 function startCounter() {
-    // Primera actualización inmediata
-    updateCounter(FIXED_START_TIMESTAMP);
+    let rawTime = localStorage.getItem('us_start_time');
+    if (!rawTime) {
+        rawTime = (Date.now() - INITIAL_OFFSET_MS).toString();
+        localStorage.setItem('us_start_time', rawTime);
+    }
+
+    const startTimestamp = parseInt(rawTime, 10);
+
+    // Renderizado inmediato
+    updateCounter(startTimestamp);
 
     if (counterInterval) {
         clearInterval(counterInterval);
     }
 
-    // Actualizar cada 1 segundo en tiempo real
+    // Actualización cada 1 segundo
     counterInterval = setInterval(() => {
-        updateCounter(FIXED_START_TIMESTAMP);
+        updateCounter(startTimestamp);
     }, 1000);
 }
 
 function updateCounter(startTimestamp) {
-    // Restamos la hora actual del teléfono a la marca fija del pasado
-    const diff = Math.max(0, Math.floor((Date.now() - startTimestamp) / 1000));
+    const now = Date.now();
+    // Garantizamos que la diferencia siempre sea positiva
+    const diff = Math.max(0, Math.floor((now - startTimestamp) / 1000));
 
     const years = Math.floor(diff / 31536000);
     const months = Math.floor((diff % 31536000) / 2592000);
