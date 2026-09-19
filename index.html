@@ -1,165 +1,132 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    
-    <!-- iOS / PWA App Configuration -->
-    <title>Us • Sofía</title>
-    <meta name="apple-mobile-web-app-title" content="Us">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#000000">
-
-    <!-- Icons & Manifest -->
-    <link rel="apple-touch-icon" href="icon-180x180.png">
-    <link rel="icon" type="image/png" href="icon-180x180.png">
-    <link rel="manifest" href="manifest.json">
-
-    <!-- Modern Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-
-    <!-- Canvas Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Sofía ❤️</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
-    <div id="app">
+    <!-- FLOATING HEARTS CONTAINER -->
+    <div id="heartContainer"></div>
 
-        <!-- INITIAL LOADER -->
-        <div id="loader">
-            <h1>Us • Sofía</h1>
-            <p>Cargando nuestra historia...</p>
-            <div class="loaderBar">
-                <div class="loaderProgress"></div>
-            </div>
-        </div>
-
-        <!-- SCREEN 1: WELCOME -->
-        <section id="welcome" class="screen active">
-            <div class="center">
-                <p class="eyebrow">UNA HISTORIA ESPECIAL</p>
-                <h1>¡Bienvenida, Sofía! ❤️</h1>
-                <p class="subtitle">Hice algo muy especial pensando solo en ti.</p>
-                <button onclick="nextScreen('intro')">Comenzar</button>
-            </div>
-        </section>
-
-        <!-- SCREEN 2: CINEMATIC INTRO -->
-        <section id="intro" class="screen">
-            <div class="center cinematic">
-                <p class="line">Sofía...</p>
-                <p class="line">Hay momentos que lo cambian todo.</p>
-                <p class="line">Y lugares que son imposibles de olvidar.</p>
-                <button onclick="nextScreen('letter')" style="margin-top: 25px;">Continuar</button>
-            </div>
-        </section>
-
-        <!-- SCREEN 3: INTERACTIVE LETTER -->
-        <section id="letter" class="screen">
-            <div class="letterCard">
-                <h2>Para ti, Sofía</h2>
-                <div id="typedLetter"></div>
-                <button id="continueLetter" onclick="nextScreen('gallery')">Ver Recuerdos</button>
-            </div>
-        </section>
-
-        <!-- SCREEN 4: MEMORIES GALLERY -->
-        <section id="gallery" class="screen">
-            <!-- MEMORY 1 -->
-            <div class="memory visible" data-index="0">
-                <img src="041569D8-1E29-4ADB-8D2C-907D2EEA402F.png" alt="Memory 1">
-                <div class="overlay"></div>
-                <div class="memoryText">
-                    <h2>Nuestros Recuerdos</h2>
-                    <p>Cada momento a tu lado, Sofía, se convierte en mi recuerdo favorito.</p>
-                </div>
-            </div>
-
-            <!-- MEMORY 2 -->
-            <div class="memory" data-index="1">
-                <img src="3E532DB9-1744-4FA3-B695-7530707F9E5F.jpeg" alt="Memory 2">
-                <div class="overlay"></div>
-                <div class="memoryText">
-                    <h2>Lugares Especiales</h2>
-                    <p>Construyendo momentos inolvidables juntos.</p>
-                </div>
-            </div>
-
-            <!-- MEMORY 3 -->
-            <div class="memory" data-index="2">
-                <img src="645BDD27-2ACF-427F-8FB8-E530815554EF.jpeg" alt="Memory 3">
-                <div class="overlay"></div>
-                <div class="memoryText">
-                    <h2>Sonrisas Para Siempre</h2>
-                    <p>Gracias por traer tanta luz y alegría a mi vida, Sofía.</p>
-                </div>
-            </div>
-
-            <!-- MEMORY 4 -->
-            <div class="memory" data-index="3">
-                <img src="D96AAB3F-820E-4A5B-94A3-75F0CD6899A4.jpeg" alt="Memory 4">
-                <div class="overlay"></div>
-                <div class="memoryText">
-                    <h2>Nuestro Camino</h2>
-                    <p>Mirando atrás a donde empezamos y lo hermoso que es donde estamos hoy.</p>
-                </div>
-            </div>
-
-            <button id="continueGallery" onclick="nextScreen('proposal')">Continuar</button>
-        </section>
-
-        <!-- SCREEN 5: PROPOSAL -->
-        <section id="proposal" class="screen">
-            <div class="proposalCard">
-                <p class="small">UNA PREGUNTA MUY ESPECIAL</p>
-                <h2>Sofía, ¿quieres recorrer este camino conmigo?</h2>
-                <p>Prometo sacarte una sonrisa cada uno de mis días.</p>
-                <div class="buttons">
-                    <button id="yesBtn" onclick="saveRelationship()">¡Sí! ❤️</button>
-                    <button id="noBtn">No</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- SCREEN 6: SAVING -->
-        <section id="saving" class="screen">
-            <div class="center">
-                <h2>Guardando nuestro momento...</h2>
-                <div class="savingBar">
-                    <div id="savingProgress"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SCREEN 7: CELEBRATION & COUNTER -->
-        <section id="celebration" class="screen">
-            <canvas id="confetti"></canvas>
-            <div class="celebrationContent">
-                <h1>Juntos para siempre, Sofía ❤️</h1>
-                <p>Llevamos juntos:</p>
-                
-                <div id="counter">
-                    <div class="timeBox"><span id="years">0</span><label>Años</label></div>
-                    <div class="timeBox"><span id="months">0</span><label>Meses</label></div>
-                    <div class="timeBox"><span id="days">0</span><label>Días</label></div>
-                    <div class="timeBox"><span id="hours">00</span><label>Horas</label></div>
-                    <div class="timeBox"><span id="minutes">00</span><label>Minutos</label></div>
-                    <div class="timeBox"><span id="seconds">00</span><label>Segundos</label></div>
-                </div>
-            </div>
-        </section>
-
+    <!-- LOADER SCREEN -->
+    <div id="loader">
+        <div class="spinner"></div>
+        <p>Loading love...</p>
     </div>
 
-    <!-- FLOATING EFFECTS -->
-    <div id="heartContainer"></div>
-    <div id="sparkleContainer"></div>
+    <!-- MAIN APP CONTAINER -->
+    <main class="app-container">
 
-    <script src="script.js"></script>
+        <!-- 1. WELCOME SCREEN (ÚNICO LUGAR DONDE APARECE EL NOMBRE) -->
+        <section id="welcome" class="screen active">
+            <div class="card">
+                <div class="icon">💌</div>
+                <h1>Hello Sofía!</h1>
+                <p>I built a small special place for us...</p>
+                <button class="btn" onclick="nextScreen('question')">Open ❤️</button>
+            </div>
+        </section>
+
+        <!-- 2. QUESTION SCREEN -->
+        <section id="question" class="screen">
+            <div class="card">
+                <div class="icon">💖</div>
+                <h2>Do you want to save our relationship in this app forever?</h2>
+                <div class="button-group">
+                    <button class="btn btn-yes" onclick="nextScreen('letter')">Yes!</button>
+                    <button class="btn btn-no" onclick="alert('Wrong answer! Try clicking Yes 😏')">No</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. LETTER SCREEN -->
+        <section id="letter" class="screen">
+            <div class="card">
+                <div class="icon">📜</div>
+                <h2>A Special Note</h2>
+                <p id="typedLetter" class="letter-body"></p>
+                <button id="continueLetter" class="btn" style="display: none;" onclick="saveRelationship()">Save Our Moment ❤️</button>
+            </div>
+        </section>
+
+        <!-- 4. SAVING ANIMATION SCREEN -->
+        <section id="saving" class="screen">
+            <div class="card">
+                <div class="icon">⏳</div>
+                <h2>Saving our story...</h2>
+                <div class="progress-bar-container">
+                    <div id="savingProgress" class="progress-bar"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. CELEBRATION & COUNTER SCREEN -->
+        <section id="celebration" class="screen">
+            <div class="card">
+                <div class="icon">🎉</div>
+                <h2>We've been together for:</h2>
+                
+                <div class="counter-grid">
+                    <div class="counter-box">
+                        <span id="years">0</span>
+                        <label>Years</label>
+                    </div>
+                    <div class="counter-box">
+                        <span id="months">0</span>
+                        <label>Months</label>
+                    </div>
+                    <div class="counter-box">
+                        <span id="days">0</span>
+                        <label>Days</label>
+                    </div>
+                    <div class="counter-box">
+                        <span id="hours">00</span>
+                        <label>Hours</label>
+                    </div>
+                    <div class="counter-box">
+                        <span id="minutes">00</span>
+                        <label>Minutes</label>
+                    </div>
+                    <div class="counter-box">
+                        <span id="seconds">00</span>
+                        <label>Seconds</label>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="nextScreen('gallery')">See Memories 📸</button>
+            </div>
+        </section>
+
+        <!-- 6. GALLERY SCREEN -->
+        <section id="gallery" class="screen">
+            <div class="card">
+                <h2>Our Memories</h2>
+                <div class="gallery-container">
+                    <div class="memory visible">
+                        <img src="https://picsum.photos/300/300?random=1" alt="Memory 1">
+                        <p>Our First Date</p>
+                    </div>
+                    <div class="memory">
+                        <img src="https://picsum.photos/300/300?random=2" alt="Memory 2">
+                        <p>Unforgettable Trip</p>
+                    </div>
+                    <div class="memory">
+                        <img src="https://picsum.photos/300/300?random=3" alt="Memory 3">
+                        <p>Always Together</p>
+                    </div>
+                </div>
+                <button class="btn" onclick="nextScreen('celebration')">Back to Counter ⏳</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SCRIPT IMPORT CON CONTROL DE CACHÉ -->
+    <script src="script.js?v=RESTORED_100"></script>
 </body>
 </html>
