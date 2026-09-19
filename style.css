@@ -1,5 +1,5 @@
 /* =====================================================
-   1. RESET, LAYOUT & PANTALLAS
+   1. RESET, LAYOUT & FUENTES MODERNAS
 ===================================================== */
 * {
     margin: 0;
@@ -12,7 +12,7 @@ body, html {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
     background-color: #000000;
     color: #ffffff;
 }
@@ -50,7 +50,7 @@ body, html {
 }
 
 /* =====================================================
-   2. LOADER INICIAL & BARRAS DE CARGA (ROSA FLUORESCENTE)
+   2. LOADER INICIAL & BARRAS DE CARGA (ROSA NEÓN)
 ===================================================== */
 #loader {
     position: fixed;
@@ -68,19 +68,22 @@ body, html {
 }
 
 #loader h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.5rem;
-    font-weight: 400;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: -1px;
     margin-bottom: 8px;
+    background: linear-gradient(135deg, #ffffff 0%, #ff66cc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 #loader p {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     opacity: 0.7;
     margin-bottom: 25px;
 }
 
-/* Pista de la barra de carga */
 .loaderBar, .savingBar {
     width: 220px;
     height: 6px;
@@ -90,13 +93,12 @@ body, html {
     border: 1px solid rgba(255, 0, 127, 0.3);
 }
 
-/* Relleno con efecto Rosa Fluorescente / Neón */
 .loaderProgress, #savingProgress {
     height: 100%;
     width: 0%;
     background: linear-gradient(90deg, #ff1493, #ff007f, #ff66cc);
     border-radius: 10px;
-    box-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f;
+    box-shadow: 0 0 12px #ff007f, 0 0 20px #ff007f;
     transition: width 0.3s ease;
 }
 
@@ -111,7 +113,7 @@ body, html {
 }
 
 /* =====================================================
-   3. SECCIONES (WELCOME, INTRO, LETTER, PROPOSAL)
+   3. SECCIONES Y TIPOGRAFÍA MODERNA
 ===================================================== */
 .center {
     text-align: center;
@@ -119,61 +121,70 @@ body, html {
 }
 
 .eyebrow {
-    font-size: 0.8rem;
-    letter-spacing: 2px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
-    opacity: 0.6;
+    color: #ff66cc;
     margin-bottom: 12px;
 }
 
 h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.2rem, 7vw, 3.2rem);
-    font-weight: 500;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(2.3rem, 8vw, 3.4rem);
+    font-weight: 800;
     line-height: 1.1;
+    letter-spacing: -1px;
     margin-bottom: 15px;
 }
 
+h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+}
+
 .subtitle {
-    font-size: 1rem;
+    font-size: 1.05rem;
     line-height: 1.6;
     opacity: 0.8;
     margin-bottom: 30px;
 }
 
-/* Botones principales */
+/* Botones Modernos con Estilo Borde Sutil */
 button, .primaryButton {
     background: #ffffff;
     color: #000000;
     border: none;
-    padding: 14px 32px;
+    padding: 16px 36px;
     border-radius: 30px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.95rem;
-    font-weight: 500;
+    font-weight: 700;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
 }
 
 button:active, .primaryButton:active {
-    transform: scale(0.96);
+    transform: scale(0.95);
 }
 
 /* Intro Cinematográfica */
 .cinematic .line {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 1.6rem;
+    font-weight: 600;
     opacity: 0.9;
-    margin: 10px 0;
+    margin: 12px 0;
 }
 
 /* Tarjeta de Carta */
 .letterCard {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: 20px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 24px;
     padding: 30px 25px;
     max-width: 380px;
     width: 100%;
@@ -181,13 +192,12 @@ button:active, .primaryButton:active {
 }
 
 .letterCard h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.8rem;
+    font-size: 1.9rem;
     margin-bottom: 15px;
 }
 
 #typedLetter {
-    font-size: 0.95rem;
+    font-size: 1rem;
     line-height: 1.7;
     opacity: 0.9;
     white-space: pre-line;
@@ -202,11 +212,11 @@ button:active, .primaryButton:active {
 /* Propuesta */
 .proposalCard {
     position: relative;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: 20px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 24px;
     padding: 35px 25px;
     max-width: 380px;
     width: 100%;
@@ -214,22 +224,22 @@ button:active, .primaryButton:active {
 }
 
 .proposalCard .small {
-    font-size: 0.8rem;
-    letter-spacing: 1.5px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    opacity: 0.6;
+    color: #ff66cc;
     margin-bottom: 15px;
 }
 
 .proposalCard h2 {
-    font-family: 'Cormorant Garamond', serif;
     color: #ff007f;
-    font-size: 2rem;
+    font-size: 2.2rem;
     margin-bottom: 15px;
 }
 
 .proposalCard p {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     line-height: 1.5;
     opacity: 0.8;
     margin-bottom: 25px;
@@ -246,11 +256,11 @@ button:active, .primaryButton:active {
 #yesBtn {
     background: #ff007f;
     color: #ffffff;
-    box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
+    box-shadow: 0 0 20px rgba(255, 0, 127, 0.5);
 }
 
 #noBtn {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.12);
     color: #ffffff;
 }
 
@@ -306,13 +316,12 @@ button:active, .primaryButton:active {
 }
 
 .memoryText h2 {
-    font-family: 'Cormorant Garamond', serif;
     font-size: 2.2rem;
     margin-bottom: 8px;
 }
 
 .memoryText p {
-    font-size: 0.95rem;
+    font-size: 1rem;
     line-height: 1.5;
     opacity: 0.85;
 }
@@ -324,7 +333,7 @@ button:active, .primaryButton:active {
 }
 
 /* =====================================================
-   5. PANTALLA SAVING / LOADER FINAL (FIX CENTRADO)
+   5. PANTALLA SAVING / LOADER FINAL (CENTRADO PERFECTO)
 ===================================================== */
 #saving {
     display: flex;
@@ -350,7 +359,7 @@ button:active, .primaryButton:active {
 }
 
 /* =====================================================
-   6. PANTALLA DE CELEBRACIÓN Y CONTADOR (RESPONSIVE)
+   6. CELEBRACIÓN Y CONTADOR RESPONSIVE
 ===================================================== */
 .celebrationContent {
     width: 100%;
@@ -366,16 +375,15 @@ button:active, .primaryButton:active {
 }
 
 .celebrationContent h1 {
-    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    font-size: clamp(1.9rem, 6.5vw, 2.6rem);
     margin-bottom: 8px;
 }
 
 .celebrationContent p {
-    font-size: clamp(0.85rem, 3.5vw, 1rem);
+    font-size: clamp(0.9rem, 3.8vw, 1.05rem);
     opacity: 0.85;
 }
 
-/* Grid del Contador: 3 columnas simétricas para móvil */
 #counter {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -388,12 +396,12 @@ button:active, .primaryButton:active {
 }
 
 .timeBox {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 0, 127, 0.25);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-radius: 12px;
-    padding: 10px 4px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 0, 127, 0.3);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 12px 4px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -403,18 +411,20 @@ button:active, .primaryButton:active {
 }
 
 .timeBox span {
-    font-size: clamp(1.1rem, 4.2vw, 1.4rem);
-    font-weight: 700;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(1.2rem, 4.5vw, 1.5rem);
+    font-weight: 800;
     line-height: 1;
     color: #ffffff;
 }
 
 .timeBox label {
     font-size: 0.65rem;
+    font-weight: 600;
     opacity: 0.8;
-    margin-top: 4px;
+    margin-top: 5px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
     color: #ffb3da;
 }
 
@@ -429,7 +439,7 @@ button:active, .primaryButton:active {
 }
 
 /* =====================================================
-   7. EFECTOS VISUALES & PROMPT DE INSTALACIÓN
+   7. EFECTOS VISUALES
 ===================================================== */
 #heartContainer, #sparkleContainer {
     position: fixed;
@@ -454,78 +464,8 @@ button:active, .primaryButton:active {
     100% { transform: translateY(-105vh) scale(1.2); opacity: 0; }
 }
 
-.sparkle {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background: #ffffff;
-    border-radius: 50%;
-    box-shadow: 0 0 6px #ffffff;
-    animation: blink 2.5s infinite alternate;
-}
-
-@keyframes blink {
-    0% { opacity: 0.2; transform: scale(0.8); }
-    100% { opacity: 1; transform: scale(1.4); }
-}
-
-/* Tarjeta PWA Install */
-#installCard {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 40px);
-    max-width: 360px;
-    background: rgba(20, 20, 20, 0.95);
-    border: 1px solid rgba(255, 0, 127, 0.4);
-    backdrop-filter: blur(15px);
-    border-radius: 16px;
-    padding: 20px;
-    z-index: 10000;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-#installCard.installHidden {
-    opacity: 0;
-    pointer-events: none;
-    transform: translate(-50%, 30px);
-}
-
-.installBox h2 {
-    font-size: 1.1rem;
-    margin-bottom: 6px;
-}
-
-.installBox p {
-    font-size: 0.85rem;
-    opacity: 0.8;
-    margin-bottom: 15px;
-}
-
-.installButtons {
-    display: flex;
-    gap: 10px;
-}
-
-.installButtons button {
-    flex: 1;
-    padding: 10px;
-    font-size: 0.85rem;
-}
-
-#installButton {
-    background: #ff007f;
-    color: #ffffff;
-}
-
-#laterButton {
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-}
-
 /* =====================================================
-   8. MEDIA QUERIES PARA MÓVILES PEQUEÑOS (iPhone SE)
+   8. MEDIA QUERIES MÓVILES PEQUEÑOS
 ===================================================== */
 @media (max-width: 360px) {
     #counter {
@@ -533,10 +473,10 @@ button:active, .primaryButton:active {
         gap: 6px;
     }
     .timeBox {
-        padding: 8px 2px;
+        padding: 9px 2px;
     }
     .timeBox span {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
     .timeBox label {
         font-size: 0.6rem;
