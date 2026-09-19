@@ -230,3 +230,4 @@ function createFloatingHearts() {
         }, 8000);
     }, 1200);
 }
+
