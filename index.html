@@ -1,77 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    
-    <!-- iOS / PWA App Configuration -->
-    <title>Us</title>
-    <meta name="apple-mobile-web-app-title" content="Us">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#000000">
-
-    <!-- Icons & Manifest -->
-    <link rel="apple-touch-icon" href="icon-180x180.png">
-    <link rel="icon" type="image/png" href="icon-180x180.png">
-    <link rel="manifest" href="manifest.json">
-
-    <!-- Modern Fonts: Plus Jakarta Sans & Outfit -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-
-    <!-- Canvas Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <div id="app">
-
-        <!-- INITIAL LOADER -->
-        <div id="loader">
-            <h1>Us</h1>
-            <p>Loading our story...</p>
-            <div class="loaderBar">
-                <div class="loaderProgress"></div>
-            </div>
-        </div>
-
-        <!-- SCREEN 1: WELCOME -->
-        <section id="welcome" class="screen active">
-            <div class="center">
-                <p class="eyebrow">A SPECIAL STORY</p>
-                <h1>Hello, Sofia ❤️</h1>
-                <p class="subtitle">I made something special just for you.</p>
-                <button onclick="nextScreen('intro')">Start</button>
-            </div>
-        </section>
-
-        <!-- SCREEN 2: CINEMATIC INTRO -->
-        <section id="intro" class="screen">
-            <div class="center cinematic">
-                <p class="line">Some moments change everything...</p>
-                <p class="line">And some places are impossible to forget.</p>
-                <button onclick="nextScreen('letter')" style="margin-top: 25px;">Continue</button>
-            </div>
-        </section>
-
-        <!-- SCREEN 3: INTERACTIVE LETTER -->
-        <section id="letter" class="screen">
-            <div class="letterCard">
-                <h2>For You</h2>
-                <div id="typedLetter"></div>
-                <button id="continueLetter" onclick="nextScreen('gallery')">View Memories</button>
-            </div>
-        </section>
-
         <!-- SCREEN 4: MEMORIES GALLERY -->
         <section id="gallery" class="screen">
             <!-- MEMORY 1 -->
             <div class="memory visible" data-index="0">
-                <img src="041569D8-1E29-4ADB-8D2C-907-D2EEA402F.png" alt="Memory 1">
+                <img src="041569D8-1E29-4ADB-8D2C-907-D2EEA402F.png" 
+                     onerror="this.onerror=null; this.src='041569D8-1E29-4ADB-8D2C-907-D2EEA402F.PNG';" 
+                     alt="Memory 1">
                 <div class="overlay"></div>
                 <div class="memoryText">
                     <h2>Our Memories</h2>
@@ -101,7 +34,9 @@
 
             <!-- MEMORY 4 -->
             <div class="memory" data-index="3">
-                <img src="D96AAB3F-820E-4A5B-94A3-75-F0CD6899A4.jpeg" alt="Memory 4">
+                <img src="D96AAB3F-820E-4A5B-94A3-75-F0CD6899A4.jpeg" 
+                     onerror="this.onerror=null; this.src='D96AAB3F-820E-4A5B-94A3-75- F0CD6899A4.jpeg';" 
+                     alt="Memory 4">
                 <div class="overlay"></div>
                 <div class="memoryText">
                     <h2>Our Journey</h2>
@@ -111,54 +46,3 @@
 
             <button id="continueGallery" onclick="nextScreen('proposal')">Continue</button>
         </section>
-
-        <!-- SCREEN 5: PROPOSAL -->
-        <section id="proposal" class="screen">
-            <div class="proposalCard">
-                <p class="small">A SPECIAL QUESTION</p>
-                <h2>Will you walk this journey with me?</h2>
-                <p>I promise to make you smile every single day.</p>
-                <div class="buttons">
-                    <button id="yesBtn" onclick="saveRelationship()">Yes! ❤️</button>
-                    <button id="noBtn">No</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- SCREEN 6: SAVING -->
-        <section id="saving" class="screen">
-            <div class="center">
-                <h2>Saving our moment...</h2>
-                <div class="savingBar">
-                    <div id="savingProgress"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SCREEN 7: CELEBRATION & COUNTER -->
-        <section id="celebration" class="screen">
-            <canvas id="confetti"></canvas>
-            <div class="celebrationContent">
-                <h1>Together forever ❤️</h1>
-                <p>We've been together for:</p>
-                
-                <div id="counter">
-                    <div class="timeBox"><span id="years">0</span><label>Years</label></div>
-                    <div class="timeBox"><span id="months">0</span><label>Months</label></div>
-                    <div class="timeBox"><span id="days">0</span><label>Days</label></div>
-                    <div class="timeBox"><span id="hours">00</span><label>Hours</label></div>
-                    <div class="timeBox"><span id="minutes">00</span><label>Minutes</label></div>
-                    <div class="timeBox"><span id="seconds">00</span><label>Seconds</label></div>
-                </div>
-            </div>
-        </section>
-
-    </div>
-
-    <!-- FLOATING EFFECTS -->
-    <div id="heartContainer"></div>
-    <div id="sparkleContainer"></div>
-
-    <script src="script.js"></script>
-</body>
-</html>
