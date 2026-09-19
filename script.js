@@ -6,10 +6,10 @@ let counterInterval = null;
 let galleryInterval = null;
 let activeGalleryIndex = 0;
 
-// TIMESTAMP ABSOLUTO E INMUTABLE:
-// Representa la hora exacta de inicio fija (19 Sep 2026, 16:07:00 UTC)
-// Es decir, exactamente 7 horas y 20 minutos antes de las 23:27 de tu captura.
-const FIXED_START_TIMESTAMP = 1789834020000;
+// FECHA Y HORA EXACTA DE INICIO EN EL MUNDO REAL
+// (19 de Septiembre de 2026, 16:07:00 UTC)
+// Este número es universal y NUNCA cambia al recargar la página.
+const ABSOLUTE_START_TIME = 1789834020000;
 
 // English Letter Content
 const letterText = `From the very first day, I knew you were someone truly special.\nThank you for all the amazing moments we've shared, and for loving me even when I start acting weird!\n\nThis little application is a special place kept just for the two of us.`;
@@ -142,22 +142,25 @@ function showCelebration() {
 }
 
 function startCounter() {
-    // Renderizado inmediato
+    // Renderizado inmediato al abrir la pantalla
     updateCounter();
 
     if (counterInterval) {
         clearInterval(counterInterval);
     }
 
-    // Bucle de actualización continuo cada 1 segundo
+    // El contador se actualiza cada segundo avanzando con el reloj del teléfono
     counterInterval = setInterval(() => {
         updateCounter();
     }, 1000);
 }
 
 function updateCounter() {
-    // Restamos el instante actual menos el timestamp fijo del pasado
-    const diff = Math.max(0, Math.floor((Date.now() - FIXED_START_TIMESTAMP) / 1000));
+    // Hora actual del dispositivo en milisegundos
+    const now = Date.now();
+
+    // Restamos la hora actual menos el momento exacto en que empezó
+    const diff = Math.max(0, Math.floor((now - ABSOLUTE_START_TIME) / 1000));
 
     const years = Math.floor(diff / 31536000);
     const months = Math.floor((diff % 31536000) / 2592000);
