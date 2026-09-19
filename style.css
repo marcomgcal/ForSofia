@@ -1,6 +1,6 @@
 /* =======================================================
    FOR SOFIA
-   CINEMATIC EXPERIENCE (FIXED & RESPONSIVE)
+   CINEMATIC EXPERIENCE (FIXED & RESPONSIVE - WITHOUT METEORS)
 ======================================================= */
 
 :root{
@@ -237,7 +237,7 @@ GALLERY
 }
 
 /* =======================================================
-LETTER (AJUSTES RESPONSIVOS CRÍTICOS)
+LETTER
 ======================================================= */
 
 #letter{
@@ -535,29 +535,6 @@ BACKGROUND EFFECTS
 @keyframes starsMove{
     from{transform:translateY(0);}
     to{transform:translateY(-300px);}
-}
-
-#shootingStars{
-    position:fixed;
-    inset:0;
-    overflow:hidden;
-    pointer-events:none;
-    z-index:2;
-}
-
-.meteor{
-    position:absolute;
-    left:-150px;
-    width:180px;
-    height:2px;
-    background:linear-gradient(90deg,white,transparent);
-    transform:rotate(-25deg);
-    animation:meteor 2s linear forwards;
-}
-
-@keyframes meteor{
-    0%{ transform:translateX(0) translateY(0) rotate(-25deg); opacity:1; }
-    100%{ transform:translateX(180vw) translateY(60vh) rotate(-25deg); opacity:0; }
 }
 
 #heartContainer{
