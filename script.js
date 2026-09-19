@@ -6,9 +6,15 @@ let counterInterval = null;
 let galleryInterval = null;
 let activeGalleryIndex = 0;
 
-// FECHA INICIAL FIJA: Hace exactamente 7 horas y 20 minutos
-// (19 de septiembre de 2026, 16:06:14 UTC)
-const START_DATE_TIMESTAMP = new Date('2026-09-19T16:06:14Z').getTime();
+// CALCULO EXACTO DE FECHA DE INICIO:
+// 7 horas y 20 minutos expresados en milisegundos
+const SEVEN_HOURS_TWENTY_MIN_MS = (7 * 60 * 60 * 1000) + (20 * 60 * 1000);
+
+// Guarda en memoria la hora exacta de inicio fija (Hora actual del sistema - 7h 20m)
+if (!localStorage.getItem("relationshipStartTime")) {
+    const fixedStartTime = Date.now() - SEVEN_HOURS_TWENTY_MIN_MS;
+    localStorage.setItem("relationshipStartTime", fixedStartTime);
+}
 
 // English Letter Content
 const letterText = `From the very first day, I knew you were someone truly special.\nThank you for all the amazing moments we've shared, and for loving me even when I start acting weird!\n\nThis little application is a special place kept just for the two of us.`;
@@ -141,18 +147,32 @@ function showCelebration() {
 }
 
 function startCounter() {
-    updateCounter(START_DATE_TIMESTAMP);
+    // Lee la marca de tiempo fija almacenada
+    let savedTimestamp = localStorage.getItem("relationshipStartTime");
+    
+    // Si por algún motivo no existe, la genera al instante
+    if (!savedTimestamp) {
+        savedTimestamp = Date.now() - SEVEN_HOURS_TWENTY_MIN_MS;
+        localStorage.setItem("relationshipStartTime", savedTimestamp);
+    }
+
+    const startTimestamp = parseInt(savedTimestamp, 10);
+
+    // Actualización inmediata antes del primer intervalo
+    updateCounter(startTimestamp);
 
     if (counterInterval) {
         clearInterval(counterInterval);
     }
 
+    // Actualiza cada segundo en tiempo real
     counterInterval = setInterval(() => {
-        updateCounter(START_DATE_TIMESTAMP);
+        updateCounter(startTimestamp);
     }, 1000);
 }
 
 function updateCounter(startTimestamp) {
+    // Calcula la diferencia real en segundos entre la hora actual del dispositivo y la hora de inicio
     const diff = Math.max(0, Math.floor((Date.now() - startTimestamp) / 1000));
 
     const years = Math.floor(diff / 31536000);
