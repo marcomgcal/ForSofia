@@ -6,10 +6,11 @@ let counterInterval = null;
 let galleryInterval = null;
 let activeGalleryIndex = 0;
 
-// FECHA Y HORA EXACTA E INMUTABLE DE INICIO
-// Formato: new Date(AÑO, MES_INDEX, DÍA, HORA, MINUTO, SEGUNDO)
-// NOTA: En JavaScript los meses van de 0 a 11 (0 = Enero, 8 = Septiembre)
-const START_DATE = new Date(2026, 8, 19, 16, 0, 0); 
+// FECHA Y HORA DE INICIO FIJA EN UTC (UNIVERSAL)
+// Formato UTC: (Año, Mes-1, Día, Hora_UTC, Minuto, Segundo)
+// Ejemplo: 19 de Septiembre de 2026 a las 16:00:00 UTC
+// 16:00 UTC son las 18:00 en España (CEST / UTC+2)
+const START_TIMESTAMP_UTC = Date.UTC(2026, 8, 19, 16, 0, 0);
 
 // English Letter Content
 const letterText = `From the very first day, I knew you were someone truly special.\nThank you for all the amazing moments we've shared, and for loving me even when I start acting weird!\n\nThis little application is a special place kept just for the two of us.`;
@@ -154,8 +155,11 @@ function startCounter() {
 }
 
 function updateCounter() {
-    const now = new Date();
-    const diff = Math.max(0, Math.floor((now.getTime() - START_DATE.getTime()) / 1000));
+    // Hora actual global del sistema en milisegundos
+    const now = Date.now();
+    
+    // Diferencia real en segundos
+    const diff = Math.max(0, Math.floor((now - START_TIMESTAMP_UTC) / 1000));
 
     const years = Math.floor(diff / 31536000);
     const months = Math.floor((diff % 31536000) / 2592000);
